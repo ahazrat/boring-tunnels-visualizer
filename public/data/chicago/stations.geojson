@@ -1,0 +1,102 @@
+{
+  "type": "FeatureCollection",
+  "name": "chicago-stations",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-downtown",
+        "name": "Downtown Loop",
+        "status": "planned",
+        "capacity_pph": 12000,
+        "depth_m": 22,
+        "notes": "Primary downtown hub (Loop / central business district). Prospective central interchange for all regional spokes."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.6298, 41.8781] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-ohare",
+        "name": "O'Hare International (ORD)",
+        "status": "planned",
+        "capacity_pph": 10000,
+        "depth_m": 20,
+        "notes": "Airport terminus — northwest spoke. High peak air-rail transfer demand."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.9073, 41.9742] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-midway",
+        "name": "Midway International (MDW)",
+        "status": "planned",
+        "capacity_pph": 7000,
+        "depth_m": 18,
+        "notes": "Southwest-side airport hub linking downtown, Joliet, and South Shore corridors."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.7522, 41.7868] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-oakbrook",
+        "name": "Oakbrook Center",
+        "status": "planned",
+        "capacity_pph": 4500,
+        "depth_m": 16,
+        "notes": "West-suburban retail / employment node (Oak Brook). Intermediate toward Naperville."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.9531, 41.8503] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-naperville",
+        "name": "Naperville",
+        "status": "planned",
+        "capacity_pph": 5500,
+        "depth_m": 16,
+        "notes": "Major western suburban employment and residential hub."
+      },
+      "geometry": { "type": "Point", "coordinates": [-88.1535, 41.7508] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-woodfield",
+        "name": "Woodfield Mall",
+        "status": "planned",
+        "capacity_pph": 5000,
+        "depth_m": 16,
+        "notes": "Schaumburg regional retail / NW suburban interchange; links toward O'Hare."
+      },
+      "geometry": { "type": "Point", "coordinates": [-88.0369, 42.0464] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-southshore",
+        "name": "South Shore Border Hub",
+        "status": "planned",
+        "capacity_pph": 4000,
+        "depth_m": 17,
+        "notes": "Prospective south-east metro hub near the Illinois–Indiana border (South Shore / Calumet corridor), positioned for cross-border and Michigan City–direction growth."
+      },
+      "geometry": { "type": "Point", "coordinates": [-87.5205, 41.5735] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-joliet",
+        "name": "Joliet",
+        "status": "planned",
+        "capacity_pph": 4500,
+        "depth_m": 16,
+        "notes": "Southwest suburban hub — balances network coverage with industrial and residential catchments along I-55 / Des Plaines corridor."
+      },
+      "geometry": { "type": "Point", "coordinates": [-88.0817, 41.5250] }
+    }
+  ]
+}

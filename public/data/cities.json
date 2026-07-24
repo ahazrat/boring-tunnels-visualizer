@@ -90,5 +90,29 @@
       "tunnels": "data/austin/tunnels.geojson",
       "stations": "data/austin/stations.geojson"
     }
+  },
+  {
+    "id": "chicago",
+    "name": "Chicago",
+    "shortName": "Chicagoland Loop",
+    "status": "planned",
+    "description": "Prospective metro network: Downtown Loop hub with spokes to O'Hare, Midway, Oakbrook, Naperville, Woodfield, South Shore (IN border), and Joliet. Schematic only — not an official proposal.",
+    "center": [-87.82, 41.82],
+    "zoom": 9.6,
+    "pitch": 48,
+    "bearing": -8,
+    "metrics": {
+      "operationalMiles": 0,
+      "plannedMiles": 110,
+      "operationalStations": 0,
+      "plannedStations": 8,
+      "targetPph": 50000,
+      "currentPeakPph": 0
+    },
+    "dataFiles": {
+      "tunnels": "data/chicago/tunnels.geojson",
+      "stations": "data/chicago/stations.geojson"
+    }
   }
 ]
+

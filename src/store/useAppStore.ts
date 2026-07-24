@@ -92,11 +92,22 @@ export const useAppStore = create<AppState>((set, get) => ({
       ])
       if (!tRes.ok || !sRes.ok) throw new Error('Failed to load city dataset')
       const [tunnels, stations] = await Promise.all([tRes.json(), sRes.json()])
+      // Prospective-only cities (e.g. Chicago) need Planned layer on or the map looks empty
+      const hasOperational = Boolean(
+        tunnels?.features?.some(
+          (f: { properties?: { status?: string } }) =>
+            f.properties?.status === 'operational',
+        ),
+      )
+      const layers = get().layers
       set({
         tunnels,
         stations,
         loading: false,
         flyToken: get().flyToken + 1,
+        layers: hasOperational
+          ? layers
+          : { ...layers, planned: true, under_construction: true },
       })
     } catch (e) {
       set({

@@ -1,0 +1,230 @@
+{
+  "type": "FeatureCollection",
+  "name": "chicago-tunnels",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-downtown-ohare",
+        "name": "Downtown → O'Hare",
+        "status": "planned",
+        "depth_m": 22,
+        "capacity_pph": 10000,
+        "notes": "Primary NW airport spoke (schematic via near-west / Irving Park corridor)."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6298, 41.8781],
+          [-87.6800, 41.9000],
+          [-87.7400, 41.9300],
+          [-87.8200, 41.9550],
+          [-87.9073, 41.9742]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-downtown-midway",
+        "name": "Downtown → Midway",
+        "status": "planned",
+        "depth_m": 20,
+        "capacity_pph": 7000,
+        "notes": "Southwest airport spoke toward Midway."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6298, 41.8781],
+          [-87.6700, 41.8450],
+          [-87.7100, 41.8100],
+          [-87.7522, 41.7868]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-downtown-oakbrook",
+        "name": "Downtown → Oakbrook",
+        "status": "planned",
+        "depth_m": 18,
+        "capacity_pph": 6000,
+        "notes": "West suburban retail / jobs corridor toward Oak Brook Center."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6298, 41.8781],
+          [-87.7200, 41.8750],
+          [-87.8200, 41.8620],
+          [-87.9531, 41.8503]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-oakbrook-naperville",
+        "name": "Oakbrook → Naperville",
+        "status": "planned",
+        "depth_m": 16,
+        "capacity_pph": 5500,
+        "notes": "Western extension from Oak Brook into Naperville."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.9531, 41.8503],
+          [-88.0300, 41.8200],
+          [-88.1000, 41.7800],
+          [-88.1535, 41.7508]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-downtown-woodfield",
+        "name": "Downtown → Woodfield",
+        "status": "planned",
+        "depth_m": 18,
+        "capacity_pph": 5500,
+        "notes": "NW suburban spoke to Schaumburg / Woodfield Mall."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6298, 41.8781],
+          [-87.7200, 41.9200],
+          [-87.8500, 41.9800],
+          [-87.9600, 42.0250],
+          [-88.0369, 42.0464]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-ohare-woodfield",
+        "name": "O'Hare → Woodfield",
+        "status": "planned",
+        "depth_m": 16,
+        "capacity_pph": 4000,
+        "notes": "NW circumferential link between airport and Schaumburg."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.9073, 41.9742],
+          [-87.9600, 42.0000],
+          [-88.0000, 42.0250],
+          [-88.0369, 42.0464]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-downtown-southshore",
+        "name": "Downtown → South Shore Border",
+        "status": "planned",
+        "depth_m": 20,
+        "capacity_pph": 5000,
+        "notes": "SE spoke toward Illinois–Indiana border / South Shore hub."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6298, 41.8781],
+          [-87.6000, 41.8200],
+          [-87.5600, 41.7200],
+          [-87.5400, 41.6400],
+          [-87.5205, 41.5735]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-midway-southshore",
+        "name": "Midway → South Shore Border",
+        "status": "planned",
+        "depth_m": 17,
+        "capacity_pph": 3500,
+        "notes": "South-side lateral linking Midway airport corridor to SE border hub."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.7522, 41.7868],
+          [-87.6800, 41.7200],
+          [-87.6000, 41.6500],
+          [-87.5205, 41.5735]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-downtown-joliet",
+        "name": "Downtown → Joliet",
+        "status": "planned",
+        "depth_m": 18,
+        "capacity_pph": 5000,
+        "notes": "SW suburban spoke to Joliet (I-55 corridor schematic)."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6298, 41.8781],
+          [-87.7000, 41.8200],
+          [-87.8000, 41.7200],
+          [-87.9500, 41.6200],
+          [-88.0817, 41.5250]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-midway-joliet",
+        "name": "Midway → Joliet",
+        "status": "planned",
+        "depth_m": 16,
+        "capacity_pph": 3500,
+        "notes": "SW lateral: Midway to Joliet for suburban airport access."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.7522, 41.7868],
+          [-87.8500, 41.7000],
+          [-87.9800, 41.6000],
+          [-88.0817, 41.5250]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chi-naperville-joliet",
+        "name": "Naperville → Joliet",
+        "status": "planned",
+        "depth_m": 15,
+        "capacity_pph": 3000,
+        "notes": "Far-west circumferential connecting Naperville and Joliet catchments."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-88.1535, 41.7508],
+          [-88.1400, 41.6800],
+          [-88.1100, 41.6000],
+          [-88.0817, 41.5250]
+        ]
+      }
+    }
+  ]
+}

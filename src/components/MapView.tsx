@@ -1,9 +1,17 @@
-import { useEffect, useMemo, useRef } from 'react'
-import * as maplibregl from 'maplibre-gl'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Map as MapLibreMap,
+  NavigationControl,
+  ScaleControl,
+  setWorkerUrl,
+  type Map as MapLibreMapType,
+} from 'maplibre-gl'
+// Force Vite to emit a real URL for the MapLibre worker (avoids blank map in dev)
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url'
 import { MapboxOverlay } from '@deck.gl/mapbox'
 import { PathLayer, ScatterplotLayer } from '@deck.gl/layers'
 import { TripsLayer } from '@deck.gl/geo-layers'
-import type { PickingInfo } from '@deck.gl/core'
+import type { PickingInfo, Layer } from '@deck.gl/core'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 import { useAppStore } from '../store/useAppStore'
@@ -13,6 +21,9 @@ import {
   particleBudget,
 } from '../lib/throughput'
 import type { StationFeature, TunnelFeature, TunnelStatus } from '../types'
+
+// Must run before any Map is constructed
+setWorkerUrl(maplibreWorkerUrl)
 
 /** Free dark basemap — no API key (OpenFreeMap) */
 const MAP_STYLE = 'https://tiles.openfreemap.org/styles/dark'
@@ -60,12 +71,15 @@ function buildTrips(
 
 export function MapView() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const mapRef = useRef<maplibregl.Map | null>(null)
+  const mapRef = useRef<MapLibreMapType | null>(null)
   const overlayRef = useRef<MapboxOverlay | null>(null)
   const animRef = useRef<number>(0)
   const timeRef = useRef(0)
+  const rideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [mapError, setMapError] = useState<string | null>(null)
+  const [mapReady, setMapReady] = useState(false)
 
-  const city = useAppStore((s) => s.getCity())
+  const city = useAppStore((s) => s.cities.find((c) => c.id === s.cityId) ?? null)
   const cityId = useAppStore((s) => s.cityId)
   const tunnels = useAppStore((s) => s.tunnels)
   const stations = useAppStore((s) => s.stations)
@@ -91,35 +105,75 @@ export function MapView() {
 
   // Init map once
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return
+    const el = containerRef.current
+    if (!el || mapRef.current) return
 
-    const map = new maplibregl.Map({
-      container: containerRef.current,
-      style: MAP_STYLE,
-      center: [-115.172, 36.125],
-      zoom: 12.2,
-      pitch: 55,
-      bearing: -20,
-      attributionControl: {},
-      maxPitch: 75,
-    })
+    let cancelled = false
+    let map: MapLibreMapType | null = null
+    let overlay: MapboxOverlay | null = null
+    let ro: ResizeObserver | null = null
 
-    map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right')
-    map.addControl(new maplibregl.ScaleControl({ maxWidth: 120 }), 'bottom-left')
+    try {
+      map = new MapLibreMap({
+        container: el,
+        style: MAP_STYLE,
+        center: [-115.172, 36.125],
+        zoom: 12.2,
+        pitch: 55,
+        bearing: -20,
+        attributionControl: {},
+        maxPitch: 75,
+      })
 
-    const overlay = new MapboxOverlay({
-      interleaved: false,
-      layers: [],
-    })
-    map.addControl(overlay)
+      map.addControl(new NavigationControl({ visualizePitch: true }), 'bottom-right')
+      map.addControl(new ScaleControl({ maxWidth: 120 }), 'bottom-left')
 
-    mapRef.current = map
-    overlayRef.current = overlay
+      overlay = new MapboxOverlay({
+        interleaved: false,
+        layers: [],
+      })
+      map.addControl(overlay)
+
+      map.on('error', (e) => {
+        console.error('[maplibre]', e.error)
+        // Style/tile errors shouldn't blank the whole UI; only surface hard init failures
+      })
+
+      map.once('load', () => {
+        if (cancelled) return
+        map?.resize()
+        setMapReady(true)
+      })
+
+      ro = new ResizeObserver(() => {
+        map?.resize()
+      })
+      ro.observe(el)
+
+      mapRef.current = map
+      overlayRef.current = overlay
+      setMapError(null)
+    } catch (err) {
+      console.error(err)
+      setMapError(err instanceof Error ? err.message : 'Failed to initialize map')
+    }
 
     return () => {
+      cancelled = true
+      setMapReady(false)
+      if (rideTimerRef.current) clearTimeout(rideTimerRef.current)
       cancelAnimationFrame(animRef.current)
-      overlay.finalize()
-      map.remove()
+      ro?.disconnect()
+      try {
+        overlay?.finalize()
+      } catch {
+        /* ignore */
+      }
+      try {
+        map?.remove()
+      } catch {
+        /* ignore */
+      }
       mapRef.current = null
       overlayRef.current = null
     }
@@ -128,27 +182,26 @@ export function MapView() {
   // Fly to city
   useEffect(() => {
     const map = mapRef.current
-    const c = useAppStore.getState().getCity()
-    if (!map || !c || flyToken === 0) return
+    if (!map || !city || flyToken === 0 || !mapReady) return
 
     map.flyTo({
-      center: c.center,
-      zoom: c.zoom,
-      pitch: c.pitch,
-      bearing: c.bearing,
+      center: city.center,
+      zoom: city.zoom,
+      pitch: city.pitch,
+      bearing: city.bearing,
       duration: 2200,
       essential: true,
     })
-  }, [flyToken, cityId])
+  }, [flyToken, cityId, city, mapReady])
 
   // First-person mode: follow tunnel path roughly
   useEffect(() => {
     const map = mapRef.current
-    if (!map || !tunnels || cameraMode !== 'first_person') return
+    if (!map || !tunnels || cameraMode !== 'first_person' || !mapReady) return
 
-    const operational = tunnels.features.find(
-      (f) => f.properties.status === 'operational',
-    ) ?? tunnels.features[0]
+    const operational =
+      tunnels.features.find((f) => f.properties.status === 'operational') ??
+      tunnels.features[0]
     if (!operational) return
 
     const coords = operational.geometry.coordinates as [number, number][]
@@ -159,8 +212,7 @@ export function MapView() {
       if (cancelled || !mapRef.current) return
       const a = coords[i % coords.length]
       const b = coords[(i + 1) % coords.length]
-      const bearing =
-        (Math.atan2(b[0] - a[0], b[1] - a[1]) * 180) / Math.PI
+      const bearing = (Math.atan2(b[0] - a[0], b[1] - a[1]) * 180) / Math.PI
       mapRef.current.easeTo({
         center: a,
         zoom: 16.5,
@@ -169,20 +221,20 @@ export function MapView() {
         duration: 900,
       })
       i += 1
-      animRef.current = window.setTimeout(step, 950) as unknown as number
+      rideTimerRef.current = setTimeout(step, 950)
     }
     step()
 
     return () => {
       cancelled = true
-      clearTimeout(animRef.current)
+      if (rideTimerRef.current) clearTimeout(rideTimerRef.current)
     }
-  }, [cameraMode, tunnels, cityId])
+  }, [cameraMode, tunnels, cityId, mapReady])
 
   // Deck layers + particle animation
   useEffect(() => {
     const overlay = overlayRef.current
-    if (!overlay) return
+    if (!overlay || !mapReady) return
 
     let cancelled = false
     const loop = () => {
@@ -197,7 +249,6 @@ export function MapView() {
         ? stationFeatures.filter((f) => layers[f.properties.status])
         : []
 
-      // Subtle night dimming based on time of day
       const night =
         timeOfDay < 6 || timeOfDay > 19
           ? 1
@@ -205,7 +256,7 @@ export function MapView() {
             ? 0.7
             : 0.4
 
-      const deckLayers = [
+      const deckLayers: Layer[] = [
         new PathLayer<TunnelFeature>({
           id: 'tunnels-glow',
           data: visibleTunnels,
@@ -242,19 +293,25 @@ export function MapView() {
           autoHighlight: true,
           highlightColor: [255, 255, 255, 80],
         }),
-        layers.particles && trips.length > 0
-          ? new TripsLayer<Trip>({
-              id: 'vehicle-trips',
-              data: trips,
-              getPath: (d) => d.path,
-              getTimestamps: (d) => d.timestamps,
-              getColor: (d) => [...d.color, 230] as [number, number, number, number],
-              getWidth: 3,
-              widthMinPixels: 2,
-              trailLength: 1.2,
-              currentTime: timeRef.current,
-            })
-          : null,
+      ]
+
+      if (layers.particles && trips.length > 0) {
+        deckLayers.push(
+          new TripsLayer<Trip>({
+            id: 'vehicle-trips',
+            data: trips,
+            getPath: (d) => d.path,
+            getTimestamps: (d) => d.timestamps,
+            getColor: (d) => [...d.color, 230] as [number, number, number, number],
+            getWidth: 3,
+            widthMinPixels: 2,
+            trailLength: 1.2,
+            currentTime: timeRef.current,
+          }),
+        )
+      }
+
+      deckLayers.push(
         new ScatterplotLayer<StationFeature>({
           id: 'stations',
           data: visibleStations,
@@ -273,7 +330,7 @@ export function MapView() {
             if (info.object) setSelectedStation(info.object)
           },
         }),
-      ].filter(Boolean)
+      )
 
       overlay.setProps({ layers: deckLayers })
       animRef.current = requestAnimationFrame(loop)
@@ -284,13 +341,26 @@ export function MapView() {
       cancelled = true
       cancelAnimationFrame(animRef.current)
     }
-  }, [tunnels, stations, layers, trips, timeOfDay, setSelectedStation])
+  }, [tunnels, stations, layers, trips, timeOfDay, setSelectedStation, mapReady])
 
   return (
-    <div className="relative h-full w-full">
-      <div ref={containerRef} className="h-full w-full" />
+    <div className="relative h-full min-h-0 w-full">
+      <div ref={containerRef} className="absolute inset-0 h-full w-full" />
+
+      {mapError && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/70 p-6">
+          <div className="max-w-md rounded-xl border border-rose-500/40 bg-zinc-950 p-4 text-sm text-rose-200">
+            <p className="font-semibold text-rose-100">Map failed to start</p>
+            <p className="mt-2 text-rose-200/80">{mapError}</p>
+            <p className="mt-3 text-xs text-zinc-500">
+              Try hard-refreshing, or run: rm -rf node_modules/.vite && npm run dev
+            </p>
+          </div>
+        </div>
+      )}
+
       {city && (
-        <div className="pointer-events-none absolute left-4 top-4 rounded-lg border border-cyan-500/20 bg-black/55 px-3 py-2 backdrop-blur-md md:left-auto md:right-[22rem]">
+        <div className="pointer-events-none absolute left-4 top-4 z-10 rounded-lg border border-cyan-500/20 bg-black/55 px-3 py-2 backdrop-blur-md">
           <p className="text-[10px] uppercase tracking-[0.2em] text-cyan-300/70">
             Viewing
           </p>

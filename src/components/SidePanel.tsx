@@ -1,6 +1,8 @@
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { useAppStore } from '../store/useAppStore'
 import { STATUS_COLORS, statusLabel } from '../lib/colors'
+import { estimateVisibleThroughput } from '../lib/throughput'
 import type { LayerVisibility, TunnelStatus } from '../types'
 
 const LAYER_KEYS: { key: keyof LayerVisibility; label: string; status?: TunnelStatus }[] = [
@@ -26,8 +28,30 @@ export function SidePanel() {
   const selectedStation = useAppStore((s) => s.selectedStation)
   const setSelectedStation = useAppStore((s) => s.setSelectedStation)
   const loading = useAppStore((s) => s.loading)
-  const city = useAppStore((s) => s.getCity())
-  const throughput = useAppStore((s) => s.getThroughput())
+  const tunnels = useAppStore((s) => s.tunnels)
+  const city = useAppStore((s) => s.cities.find((c) => c.id === s.cityId) ?? null)
+
+  // Compute outside the store selector — returning a new object from useAppStore
+  // every call causes React 19 "getSnapshot should be cached" infinite loops.
+  const throughput = useMemo(
+    () =>
+      estimateVisibleThroughput(
+        tunnels,
+        {
+          operational: layers.operational,
+          under_construction: layers.under_construction,
+          planned: layers.planned,
+        },
+        whatIfFactor,
+      ),
+    [
+      tunnels,
+      layers.operational,
+      layers.under_construction,
+      layers.planned,
+      whatIfFactor,
+    ],
+  )
 
   return (
     <motion.aside

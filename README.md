@@ -10,7 +10,7 @@ Beautiful, high-performance **static** 3D web app for exploring Boring Company t
 
 ## Features (Phase 1 MVP)
 
-- **City selector** with cinematic fly-in (Vegas, Nashville, Dubai, Austin)
+- **City selector** with cinematic fly-in (Vegas, Nashville, Dubai, Austin, Chicago)
 - **Layer toggles**: Operational · Under Construction · Planned
 - Glowing **tunnel paths** + clickable **stations**
 - **Animated vehicle flows** (density scales with capacity / what-if slider)
