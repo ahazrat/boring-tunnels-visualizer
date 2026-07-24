@@ -82,7 +82,7 @@
         "status": "planned",
         "capacity_pph": 5500,
         "depth_m": 14,
-        "notes": "Western suburban hub — links via Oakbrook to Downtown, and twin-tube to Joliet."
+        "notes": "Western suburban hub — links via Oakbrook to Downtown, and twin-tubes to Joliet and Woodfield."
       },
       "geometry": {
         "type": "Point",
@@ -100,7 +100,7 @@
         "status": "planned",
         "capacity_pph": 5000,
         "depth_m": 14,
-        "notes": "Northwest suburban interchange (Schaumburg) — twin-tube link to O'Hare only."
+        "notes": "Northwest suburban interchange (Schaumburg) — twin-tube links to O'Hare and Naperville."
       },
       "geometry": {
         "type": "Point",

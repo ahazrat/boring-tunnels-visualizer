@@ -52,7 +52,7 @@ const STATIONS = {
     lat: 41.7508,
     capacity: 5500,
     depth: 14,
-    notes: 'Western suburban hub — links via Oakbrook to Downtown, and twin-tube to Joliet.',
+    notes: 'Western suburban hub — links via Oakbrook to Downtown, and twin-tubes to Joliet and Woodfield.',
   },
   woodfield: {
     name: 'Woodfield Mall',
@@ -60,7 +60,7 @@ const STATIONS = {
     lat: 42.0464,
     capacity: 5000,
     depth: 14,
-    notes: 'Northwest suburban interchange (Schaumburg) — twin-tube link to O\'Hare only.',
+    notes: 'Northwest suburban interchange (Schaumburg) — twin-tube links to O\'Hare and Naperville.',
   },
   southshore: {
     name: 'South Shore Border Hub',
@@ -101,6 +101,7 @@ const ROUTES = [
   { id: 'downtown-oakbrook', from: 'downtown', to: 'oakbrook', capacity: 6000, maxDepth: 40 },
   { id: 'oakbrook-naperville', from: 'oakbrook', to: 'naperville', capacity: 5500, maxDepth: 38 },
   { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
+  { id: 'naperville-woodfield', from: 'naperville', to: 'woodfield', capacity: 4500, maxDepth: 40 },
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
   { id: 'joliet-southshore', from: 'joliet', to: 'southshore', capacity: 4500, maxDepth: 42 },
