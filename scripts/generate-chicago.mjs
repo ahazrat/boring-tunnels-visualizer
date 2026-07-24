@@ -78,11 +78,20 @@ const STATIONS = {
     depth: 14,
     notes: 'Southwest suburban hub — twin-tube link to Midway only (no Downtown corridor).',
   },
+  evanston: {
+    name: 'Evanston',
+    lon: -87.6877,
+    lat: 41.8869,
+    capacity: 5000,
+    depth: 14,
+    notes: 'North-shore suburban hub — twin-tube link to Downtown only.',
+  },
 }
 
 /**
  * Unique edges only — no redundant overlapping laterals.
  * Joliet connects only to Midway (not Downtown).
+ * Evanston connects only to Downtown.
  */
 const ROUTES = [
   { id: 'downtown-ohare', from: 'downtown', to: 'ohare', capacity: 10000, maxDepth: 48 },
@@ -92,6 +101,7 @@ const ROUTES = [
   { id: 'downtown-woodfield', from: 'downtown', to: 'woodfield', capacity: 5500, maxDepth: 44 },
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
+  { id: 'downtown-evanston', from: 'downtown', to: 'evanston', capacity: 5500, maxDepth: 40 },
 ]
 
 const SAMPLES = 28

@@ -145,6 +145,24 @@
           41.525
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-evanston",
+        "name": "Evanston",
+        "status": "planned",
+        "capacity_pph": 5000,
+        "depth_m": 14,
+        "notes": "North-shore suburban hub — twin-tube link to Downtown only."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6877,
+          41.8869
+        ]
+      }
     }
   ]
 }
