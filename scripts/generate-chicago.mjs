@@ -84,7 +84,7 @@ const STATIONS = {
     capacity: 5500,
     depth: 14,
     notes:
-      'Western suburban hub — links via Woodridge toward Oakbrook/Downtown, twin-tube to Woodfield, and south via Bolingbrook toward Joliet.',
+      'Western suburban hub — links via Woodridge toward Oakbrook/Downtown, twin-tube to Woodfield, south via Bolingbrook toward Joliet, and southwest to Plainfield.',
   },
   bolingbrook: {
     name: 'Bolingbrook',
@@ -94,7 +94,17 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor along the I-55 approach.',
+      'Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield.',
+  },
+  plainfield: {
+    name: 'Plainfield',
+    // Far SW suburb — west of Bolingbrook / south of Naperville / NW of Joliet
+    lon: -88.212,
+    lat: 41.627,
+    capacity: 4500,
+    depth: 14,
+    notes:
+      'Far southwest hub in Plainfield — twin-tube links to Naperville, Bolingbrook, and Joliet.',
   },
   woodfield: {
     name: 'Woodfield Mall',
@@ -119,7 +129,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Bolingbrook (toward Naperville); no Downtown corridor.',
+      'Southwest suburban hub — twin-tube links to Midway, South Shore Border, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor.',
   },
   evanston: {
     name: 'Evanston',
@@ -160,6 +170,10 @@ const ROUTES = [
   // Split Naperville–Joliet at Bolingbrook
   { id: 'naperville-bolingbrook', from: 'naperville', to: 'bolingbrook', capacity: 4000, maxDepth: 38 },
   { id: 'bolingbrook-joliet', from: 'bolingbrook', to: 'joliet', capacity: 4000, maxDepth: 40 },
+  // Plainfield SW hub
+  { id: 'naperville-plainfield', from: 'naperville', to: 'plainfield', capacity: 4000, maxDepth: 38 },
+  { id: 'bolingbrook-plainfield', from: 'bolingbrook', to: 'plainfield', capacity: 4000, maxDepth: 36 },
+  { id: 'plainfield-joliet', from: 'plainfield', to: 'joliet', capacity: 4000, maxDepth: 38 },
   { id: 'downtown-evanston', from: 'downtown', to: 'evanston', capacity: 5500, maxDepth: 40 },
 ]
 

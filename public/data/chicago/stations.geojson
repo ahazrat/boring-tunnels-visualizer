@@ -136,7 +136,7 @@
         "status": "planned",
         "capacity_pph": 5500,
         "depth_m": 14,
-        "notes": "Western suburban hub — links via Woodridge toward Oakbrook/Downtown, twin-tube to Woodfield, and south via Bolingbrook toward Joliet."
+        "notes": "Western suburban hub — links via Woodridge toward Oakbrook/Downtown, twin-tube to Woodfield, south via Bolingbrook toward Joliet, and southwest to Plainfield."
       },
       "geometry": {
         "type": "Point",
@@ -154,13 +154,31 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor along the I-55 approach."
+        "notes": "Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield."
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
           -88.0684,
           41.6986
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-plainfield",
+        "name": "Plainfield",
+        "status": "planned",
+        "capacity_pph": 4500,
+        "depth_m": 14,
+        "notes": "Far southwest hub in Plainfield — twin-tube links to Naperville, Bolingbrook, and Joliet."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.212,
+          41.627
         ]
       }
     },
@@ -208,7 +226,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Bolingbrook (toward Naperville); no Downtown corridor."
+        "notes": "Southwest suburban hub — twin-tube links to Midway, South Shore Border, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor."
       },
       "geometry": {
         "type": "Point",
