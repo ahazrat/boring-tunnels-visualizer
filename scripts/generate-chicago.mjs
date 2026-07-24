@@ -55,7 +55,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and I-88/I-355 Park & Ride.',
+      'West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and Woodridge.',
   },
   lombard: {
     name: 'Lombard',
@@ -65,18 +65,17 @@ const STATIONS = {
     capacity: 5000,
     depth: 14,
     notes:
-      'DuPage hub in Lombard (near Yorktown corridor) — twin-tube links to Oakbrook, I-88/I-355 Park & Ride, and O\'Hare.',
+      'DuPage hub in Lombard (near Yorktown corridor) — twin-tube links to Oakbrook, Woodridge, and O\'Hare.',
   },
-  i88i355: {
-    name: 'I-88 / I-355 Park & Ride',
-    // I-88 × I-355 interchange — parking-rich commercial core between
-    // Lisle (N), Downers Grove (NE), and Woodridge (S); direct ramp access both freeways
+  woodridge: {
+    name: 'Woodridge',
+    // I-88 × I-355 interchange area — between Lisle, Downers Grove, and Woodridge
     lon: -88.047,
     lat: 41.791,
     capacity: 6000,
     depth: 14,
     notes:
-      'Large park-and-ride hub at the I-88 / I-355 interchange, sited between Lisle, Downers Grove, and Woodridge; links north to Lombard and east/west on the Oakbrook–Naperville corridor.',
+      'Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, and Lombard.',
   },
   naperville: {
     name: 'Naperville',
@@ -85,7 +84,7 @@ const STATIONS = {
     capacity: 5500,
     depth: 14,
     notes:
-      'Western suburban hub — links via I-88/I-355 Park & Ride toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield.',
+      'Western suburban hub — links via Woodridge toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield.',
   },
   woodfield: {
     name: 'Woodfield Mall',
@@ -124,7 +123,7 @@ const STATIONS = {
 
 /**
  * Unique edges only — no redundant overlapping laterals.
- * I-88/I-355 Park & Ride sits on the Oakbrook–Naperville corridor (replaces direct link).
+ * Woodridge sits on the Oakbrook–Naperville corridor (replaces direct link).
  */
 const ROUTES = [
   { id: 'downtown-ohare', from: 'downtown', to: 'ohare', capacity: 10000, maxDepth: 48 },
@@ -134,12 +133,12 @@ const ROUTES = [
   { id: 'oakpark-oakbrook', from: 'oakpark', to: 'oakbrook', capacity: 5500, maxDepth: 38 },
   { id: 'oakpark-ohare', from: 'oakpark', to: 'ohare', capacity: 5500, maxDepth: 42 },
   { id: 'oakpark-midway', from: 'oakpark', to: 'midway', capacity: 5500, maxDepth: 40 },
-  // Split former Oakbrook–Naperville long-haul at the 88/355 park-and-ride
-  { id: 'oakbrook-i88i355', from: 'oakbrook', to: 'i88i355', capacity: 5500, maxDepth: 38 },
-  { id: 'i88i355-naperville', from: 'i88i355', to: 'naperville', capacity: 5500, maxDepth: 38 },
-  // Lombard hub: Oakbrook, 88/355, O'Hare
+  // Split former Oakbrook–Naperville long-haul at Woodridge (88/355)
+  { id: 'oakbrook-woodridge', from: 'oakbrook', to: 'woodridge', capacity: 5500, maxDepth: 38 },
+  { id: 'woodridge-naperville', from: 'woodridge', to: 'naperville', capacity: 5500, maxDepth: 38 },
+  // Lombard hub: Oakbrook, Woodridge, O'Hare
   { id: 'oakbrook-lombard', from: 'oakbrook', to: 'lombard', capacity: 5000, maxDepth: 36 },
-  { id: 'lombard-i88i355', from: 'lombard', to: 'i88i355', capacity: 5000, maxDepth: 36 },
+  { id: 'lombard-woodridge', from: 'lombard', to: 'woodridge', capacity: 5000, maxDepth: 36 },
   { id: 'lombard-ohare', from: 'lombard', to: 'ohare', capacity: 5500, maxDepth: 42 },
   { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
   { id: 'naperville-woodfield', from: 'naperville', to: 'woodfield', capacity: 4500, maxDepth: 40 },

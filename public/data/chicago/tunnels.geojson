@@ -1985,15 +1985,15 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "oakbrook-i88i355-nb",
-        "name": "Oakbrook Center ↔ I-88 / I-355 Park & Ride · Tube A",
+        "id": "oakbrook-woodridge-nb",
+        "name": "Oakbrook Center ↔ Woodridge · Tube A",
         "status": "planned",
         "depth_m": 38,
         "capacity_pph": 2750,
         "direction": "forward",
-        "pair_id": "oakbrook-i88i355",
+        "pair_id": "oakbrook-woodridge",
         "from": "oakbrook",
-        "to": "i88i355",
+        "to": "woodridge",
         "notes": "Twin tube A (outbound). Straight plan alignment with subsurface bowl (portal ~14–14m, mid ~38m). ~6.3 mi."
       },
       "geometry": {
@@ -2150,14 +2150,14 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "oakbrook-i88i355-sb",
-        "name": "Oakbrook Center ↔ I-88 / I-355 Park & Ride · Tube B",
+        "id": "oakbrook-woodridge-sb",
+        "name": "Oakbrook Center ↔ Woodridge · Tube B",
         "status": "planned",
         "depth_m": 38,
         "capacity_pph": 2750,
         "direction": "return",
-        "pair_id": "oakbrook-i88i355",
-        "from": "i88i355",
+        "pair_id": "oakbrook-woodridge",
+        "from": "woodridge",
         "to": "oakbrook",
         "notes": "Twin tube B (return). Parallel opposite-direction bore; no shared track with Tube A."
       },
@@ -2315,14 +2315,14 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "i88i355-naperville-nb",
-        "name": "I-88 / I-355 Park & Ride ↔ Naperville · Tube A",
+        "id": "woodridge-naperville-nb",
+        "name": "Woodridge ↔ Naperville · Tube A",
         "status": "planned",
         "depth_m": 38,
         "capacity_pph": 2750,
         "direction": "forward",
-        "pair_id": "i88i355-naperville",
-        "from": "i88i355",
+        "pair_id": "woodridge-naperville",
+        "from": "woodridge",
         "to": "naperville",
         "notes": "Twin tube A (outbound). Straight plan alignment with subsurface bowl (portal ~14–14m, mid ~38m). ~6.2 mi."
       },
@@ -2480,15 +2480,15 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "i88i355-naperville-sb",
-        "name": "I-88 / I-355 Park & Ride ↔ Naperville · Tube B",
+        "id": "woodridge-naperville-sb",
+        "name": "Woodridge ↔ Naperville · Tube B",
         "status": "planned",
         "depth_m": 38,
         "capacity_pph": 2750,
         "direction": "return",
-        "pair_id": "i88i355-naperville",
+        "pair_id": "woodridge-naperville",
         "from": "naperville",
-        "to": "i88i355",
+        "to": "woodridge",
         "notes": "Twin tube B (return). Parallel opposite-direction bore; no shared track with Tube A."
       },
       "geometry": {
@@ -2975,15 +2975,15 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "lombard-i88i355-nb",
-        "name": "Lombard ↔ I-88 / I-355 Park & Ride · Tube A",
+        "id": "lombard-woodridge-nb",
+        "name": "Lombard ↔ Woodridge · Tube A",
         "status": "planned",
         "depth_m": 36,
         "capacity_pph": 2500,
         "direction": "forward",
-        "pair_id": "lombard-i88i355",
+        "pair_id": "lombard-woodridge",
         "from": "lombard",
-        "to": "i88i355",
+        "to": "woodridge",
         "notes": "Twin tube A (outbound). Straight plan alignment with subsurface bowl (portal ~14–14m, mid ~36m). ~6.5 mi."
       },
       "geometry": {
@@ -3140,14 +3140,14 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "lombard-i88i355-sb",
-        "name": "Lombard ↔ I-88 / I-355 Park & Ride · Tube B",
+        "id": "lombard-woodridge-sb",
+        "name": "Lombard ↔ Woodridge · Tube B",
         "status": "planned",
         "depth_m": 36,
         "capacity_pph": 2500,
         "direction": "return",
-        "pair_id": "lombard-i88i355",
-        "from": "i88i355",
+        "pair_id": "lombard-woodridge",
+        "from": "woodridge",
         "to": "lombard",
         "notes": "Twin tube B (return). Parallel opposite-direction bore; no shared track with Tube A."
       },

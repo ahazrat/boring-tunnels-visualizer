@@ -82,7 +82,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and I-88/I-355 Park & Ride."
+        "notes": "West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and Woodridge."
       },
       "geometry": {
         "type": "Point",
@@ -100,7 +100,7 @@
         "status": "planned",
         "capacity_pph": 5000,
         "depth_m": 14,
-        "notes": "DuPage hub in Lombard (near Yorktown corridor) — twin-tube links to Oakbrook, I-88/I-355 Park & Ride, and O'Hare."
+        "notes": "DuPage hub in Lombard (near Yorktown corridor) — twin-tube links to Oakbrook, Woodridge, and O'Hare."
       },
       "geometry": {
         "type": "Point",
@@ -113,12 +113,12 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "st-chi-i88i355",
-        "name": "I-88 / I-355 Park & Ride",
+        "id": "st-chi-woodridge",
+        "name": "Woodridge",
         "status": "planned",
         "capacity_pph": 6000,
         "depth_m": 14,
-        "notes": "Large park-and-ride hub at the I-88 / I-355 interchange, sited between Lisle, Downers Grove, and Woodridge; links north to Lombard and east/west on the Oakbrook–Naperville corridor."
+        "notes": "Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, and Lombard."
       },
       "geometry": {
         "type": "Point",
@@ -136,7 +136,7 @@
         "status": "planned",
         "capacity_pph": 5500,
         "depth_m": 14,
-        "notes": "Western suburban hub — links via I-88/I-355 Park & Ride toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield."
+        "notes": "Western suburban hub — links via Woodridge toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield."
       },
       "geometry": {
         "type": "Point",
