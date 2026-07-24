@@ -100,7 +100,7 @@
         "status": "planned",
         "capacity_pph": 5000,
         "depth_m": 14,
-        "notes": "Northwest suburban interchange (Schaumburg)."
+        "notes": "Northwest suburban interchange (Schaumburg) — twin-tube link to O'Hare only."
       },
       "geometry": {
         "type": "Point",

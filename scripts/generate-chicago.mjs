@@ -60,7 +60,7 @@ const STATIONS = {
     lat: 42.0464,
     capacity: 5000,
     depth: 14,
-    notes: 'Northwest suburban interchange (Schaumburg).',
+    notes: 'Northwest suburban interchange (Schaumburg) — twin-tube link to O\'Hare only.',
   },
   southshore: {
     name: 'South Shore Border Hub',
@@ -92,6 +92,7 @@ const STATIONS = {
 /**
  * Unique edges only — no redundant overlapping laterals.
  * Joliet connects only to Midway (not Downtown).
+ * Woodfield connects only to O'Hare (not Downtown).
  * Evanston connects only to Downtown.
  */
 const ROUTES = [
@@ -99,7 +100,7 @@ const ROUTES = [
   { id: 'downtown-midway', from: 'downtown', to: 'midway', capacity: 7000, maxDepth: 42 },
   { id: 'downtown-oakbrook', from: 'downtown', to: 'oakbrook', capacity: 6000, maxDepth: 40 },
   { id: 'oakbrook-naperville', from: 'oakbrook', to: 'naperville', capacity: 5500, maxDepth: 38 },
-  { id: 'downtown-woodfield', from: 'downtown', to: 'woodfield', capacity: 5500, maxDepth: 44 },
+  { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
   { id: 'downtown-evanston', from: 'downtown', to: 'evanston', capacity: 5500, maxDepth: 40 },
