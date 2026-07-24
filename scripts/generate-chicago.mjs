@@ -114,13 +114,15 @@ const STATIONS = {
     depth: 14,
     notes: 'Northwest suburban interchange (Schaumburg) — twin-tube links to O\'Hare, Naperville, and Evanston.',
   },
-  southshore: {
-    name: 'South Shore Border Hub',
-    lon: -87.5205,
-    lat: 41.5735,
+  eastchicago: {
+    name: 'East Chicago',
+    // East Chicago, Indiana — industrial lakefront / IN border
+    lon: -87.4548,
+    lat: 41.6392,
     capacity: 4000,
     depth: 15,
-    notes: 'Southeast metro hub near Illinois–Indiana border — links to Downtown and Joliet.',
+    notes:
+      'Northwest Indiana hub in East Chicago — twin-tube links to Downtown Loop and Joliet.',
   },
   joliet: {
     name: 'Joliet',
@@ -129,7 +131,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub — twin-tube links to Midway, South Shore Border, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor.',
+      'Southwest suburban hub — twin-tube links to Midway, East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor.',
   },
   evanston: {
     name: 'Evanston',
@@ -164,9 +166,9 @@ const ROUTES = [
   { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
   { id: 'naperville-woodfield', from: 'naperville', to: 'woodfield', capacity: 4500, maxDepth: 40 },
   { id: 'woodfield-evanston', from: 'woodfield', to: 'evanston', capacity: 4500, maxDepth: 40 },
-  { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
+  { id: 'downtown-eastchicago', from: 'downtown', to: 'eastchicago', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
-  { id: 'joliet-southshore', from: 'joliet', to: 'southshore', capacity: 4500, maxDepth: 42 },
+  { id: 'joliet-eastchicago', from: 'joliet', to: 'eastchicago', capacity: 4500, maxDepth: 42 },
   // Split Naperville–Joliet at Bolingbrook
   { id: 'naperville-bolingbrook', from: 'naperville', to: 'bolingbrook', capacity: 4000, maxDepth: 38 },
   { id: 'bolingbrook-joliet', from: 'bolingbrook', to: 'joliet', capacity: 4000, maxDepth: 40 },

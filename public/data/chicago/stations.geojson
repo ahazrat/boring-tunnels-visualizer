@@ -203,18 +203,18 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "st-chi-southshore",
-        "name": "South Shore Border Hub",
+        "id": "st-chi-eastchicago",
+        "name": "East Chicago",
         "status": "planned",
         "capacity_pph": 4000,
         "depth_m": 15,
-        "notes": "Southeast metro hub near Illinois–Indiana border — links to Downtown and Joliet."
+        "notes": "Northwest Indiana hub in East Chicago — twin-tube links to Downtown Loop and Joliet."
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -87.5205,
-          41.5735
+          -87.4548,
+          41.6392
         ]
       }
     },
@@ -226,7 +226,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub — twin-tube links to Midway, South Shore Border, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor."
+        "notes": "Southwest suburban hub — twin-tube links to Midway, East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor."
       },
       "geometry": {
         "type": "Point",
