@@ -108,7 +108,7 @@
     "name": "Chicago",
     "shortName": "Chicagoland Loop",
     "status": "planned",
-    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oak Park (then Oakbrook via I-88/I-355 Park & Ride to Naperville), South Shore (IN border), and Evanston; Woodfield links to O'Hare, Naperville, and Evanston; Joliet links to Midway, South Shore, and Naperville. Oak Park splits the near-west corridor; Park & Ride sits between Lisle, Downers Grove, and Woodridge at I-88 \u00d7 I-355. Each route is two opposite-direction bores with a subsurface depth bowl.",
+    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oak Park (then Oakbrook via I-88/I-355 Park & Ride to Naperville), South Shore (IN border), and Evanston; Lombard links Oakbrook, I-88/I-355 Park & Ride, and O'Hare; Woodfield links to O'Hare, Naperville, and Evanston; Joliet links to Midway, South Shore, and Naperville. Each route is two opposite-direction bores with a subsurface depth bowl.",
     "center": [
       -87.82,
       41.84
@@ -118,9 +118,9 @@
     "bearing": -8,
     "metrics": {
       "operationalMiles": 0,
-      "plannedMiles": 206,
+      "plannedMiles": 225,
       "operationalStations": 0,
-      "plannedStations": 11,
+      "plannedStations": 12,
       "targetPph": 50000,
       "currentPeakPph": 0
     },

@@ -28,7 +28,7 @@ const STATIONS = {
     lat: 41.9742,
     capacity: 10000,
     depth: 16,
-    notes: 'Northwest airport terminus.',
+    notes: "Northwest airport terminus — twin-tube links include Downtown and Lombard.",
   },
   midway: {
     name: 'Midway International (MDW)',
@@ -54,7 +54,18 @@ const STATIONS = {
     lat: 41.8503,
     capacity: 4500,
     depth: 14,
-    notes: 'West-suburban retail / employment node — east to Oak Park/Downtown, west via I-88/I-355 Park & Ride.',
+    notes:
+      'West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and I-88/I-355 Park & Ride.',
+  },
+  lombard: {
+    name: 'Lombard',
+    // Yorktown / central Lombard — between Oakbrook, I-88, and north toward O'Hare
+    lon: -88.0078,
+    lat: 41.8801,
+    capacity: 5000,
+    depth: 14,
+    notes:
+      'DuPage hub in Lombard (near Yorktown corridor) — twin-tube links to Oakbrook, I-88/I-355 Park & Ride, and O\'Hare.',
   },
   i88i355: {
     name: 'I-88 / I-355 Park & Ride',
@@ -65,7 +76,7 @@ const STATIONS = {
     capacity: 6000,
     depth: 14,
     notes:
-      'Large park-and-ride hub at the I-88 / I-355 interchange, sited between Lisle, Downers Grove, and Woodridge for easy freeway access and surface parking.',
+      'Large park-and-ride hub at the I-88 / I-355 interchange, sited between Lisle, Downers Grove, and Woodridge; links north to Lombard and east/west on the Oakbrook–Naperville corridor.',
   },
   naperville: {
     name: 'Naperville',
@@ -124,6 +135,10 @@ const ROUTES = [
   // Split former Oakbrook–Naperville long-haul at the 88/355 park-and-ride
   { id: 'oakbrook-i88i355', from: 'oakbrook', to: 'i88i355', capacity: 5500, maxDepth: 38 },
   { id: 'i88i355-naperville', from: 'i88i355', to: 'naperville', capacity: 5500, maxDepth: 38 },
+  // Lombard hub: Oakbrook, 88/355, O'Hare
+  { id: 'oakbrook-lombard', from: 'oakbrook', to: 'lombard', capacity: 5000, maxDepth: 36 },
+  { id: 'lombard-i88i355', from: 'lombard', to: 'i88i355', capacity: 5000, maxDepth: 36 },
+  { id: 'lombard-ohare', from: 'lombard', to: 'ohare', capacity: 5500, maxDepth: 42 },
   { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
   { id: 'naperville-woodfield', from: 'naperville', to: 'woodfield', capacity: 4500, maxDepth: 40 },
   { id: 'woodfield-evanston', from: 'woodfield', to: 'evanston', capacity: 4500, maxDepth: 40 },
