@@ -46,7 +46,7 @@
         "status": "planned",
         "capacity_pph": 7000,
         "depth_m": 15,
-        "notes": "Southwest-side airport terminus."
+        "notes": "Southwest-side airport terminus — south corridor toward Orland Park and Joliet."
       },
       "geometry": {
         "type": "Point",
@@ -221,12 +221,30 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "st-chi-orlandpark",
+        "name": "Orland Park",
+        "status": "planned",
+        "capacity_pph": 4500,
+        "depth_m": 14,
+        "notes": "Southwest suburban hub in Orland Park, splitting the Midway–Joliet twin-tube corridor."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.8539,
+          41.6303
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "id": "st-chi-joliet",
         "name": "Joliet",
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub — twin-tube links to Midway, East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor."
+        "notes": "Southwest suburban hub — twin-tube links to Orland Park (toward Midway), East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor."
       },
       "geometry": {
         "type": "Point",

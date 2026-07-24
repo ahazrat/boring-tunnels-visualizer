@@ -36,7 +36,7 @@ const STATIONS = {
     lat: 41.7868,
     capacity: 7000,
     depth: 15,
-    notes: 'Southwest-side airport terminus.',
+    notes: 'Southwest-side airport terminus — south corridor toward Orland Park and Joliet.',
   },
   oakpark: {
     name: 'Oak Park',
@@ -124,6 +124,16 @@ const STATIONS = {
     notes:
       'Northwest Indiana hub in East Chicago — twin-tube links to Downtown Loop and Joliet.',
   },
+  orlandpark: {
+    name: 'Orland Park',
+    // SW suburb between Midway and Joliet
+    lon: -87.8539,
+    lat: 41.6303,
+    capacity: 4500,
+    depth: 14,
+    notes:
+      'Southwest suburban hub in Orland Park, splitting the Midway–Joliet twin-tube corridor.',
+  },
   joliet: {
     name: 'Joliet',
     lon: -88.0817,
@@ -131,7 +141,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub — twin-tube links to Midway, East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor.',
+      'Southwest suburban hub — twin-tube links to Orland Park (toward Midway), East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor.',
   },
   evanston: {
     name: 'Evanston',
@@ -167,7 +177,9 @@ const ROUTES = [
   { id: 'naperville-woodfield', from: 'naperville', to: 'woodfield', capacity: 4500, maxDepth: 40 },
   { id: 'woodfield-evanston', from: 'woodfield', to: 'evanston', capacity: 4500, maxDepth: 40 },
   { id: 'downtown-eastchicago', from: 'downtown', to: 'eastchicago', capacity: 5000, maxDepth: 42 },
-  { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
+  // Split Midway–Joliet at Orland Park
+  { id: 'midway-orlandpark', from: 'midway', to: 'orlandpark', capacity: 5000, maxDepth: 40 },
+  { id: 'orlandpark-joliet', from: 'orlandpark', to: 'joliet', capacity: 4500, maxDepth: 42 },
   { id: 'joliet-eastchicago', from: 'joliet', to: 'eastchicago', capacity: 4500, maxDepth: 42 },
   // Split Naperville–Joliet at Bolingbrook
   { id: 'naperville-bolingbrook', from: 'naperville', to: 'bolingbrook', capacity: 4000, maxDepth: 38 },
