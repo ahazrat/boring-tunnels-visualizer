@@ -76,13 +76,13 @@ const STATIONS = {
     lat: 41.525,
     capacity: 4500,
     depth: 14,
-    notes: 'Southwest suburban hub.',
+    notes: 'Southwest suburban hub — twin-tube link to Midway only (no Downtown corridor).',
   },
 }
 
 /**
- * Unique edges only — star from Downtown + Oakbrook→Naperville.
- * No second corridor between the same pair; no redundant overlapping laterals.
+ * Unique edges only — no redundant overlapping laterals.
+ * Joliet connects only to Midway (not Downtown).
  */
 const ROUTES = [
   { id: 'downtown-ohare', from: 'downtown', to: 'ohare', capacity: 10000, maxDepth: 48 },
@@ -91,7 +91,7 @@ const ROUTES = [
   { id: 'oakbrook-naperville', from: 'oakbrook', to: 'naperville', capacity: 5500, maxDepth: 38 },
   { id: 'downtown-woodfield', from: 'downtown', to: 'woodfield', capacity: 5500, maxDepth: 44 },
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
-  { id: 'downtown-joliet', from: 'downtown', to: 'joliet', capacity: 5000, maxDepth: 46 },
+  { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
 ]
 
 const SAMPLES = 28

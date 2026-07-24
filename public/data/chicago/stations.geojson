@@ -136,7 +136,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub."
+        "notes": "Southwest suburban hub — twin-tube link to Midway only (no Downtown corridor)."
       },
       "geometry": {
         "type": "Point",
