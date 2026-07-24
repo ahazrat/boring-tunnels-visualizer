@@ -6,8 +6,6 @@ import {
   setWorkerUrl,
   type Map as MapLibreMapType,
 } from 'maplibre-gl'
-// Force Vite to emit a real URL for the MapLibre worker (avoids blank map in dev)
-import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url'
 import { MapboxOverlay } from '@deck.gl/mapbox'
 import { PathLayer, ScatterplotLayer } from '@deck.gl/layers'
 import { TripsLayer } from '@deck.gl/geo-layers'
@@ -22,8 +20,22 @@ import {
 } from '../lib/throughput'
 import type { StationFeature, TunnelFeature, TunnelStatus } from '../types'
 
-// Must run before any Map is constructed
-setWorkerUrl(maplibreWorkerUrl)
+/**
+ * Absolute worker URL under Vite `base` (required for GitHub Pages subpath).
+ * Worker ESM imports ./maplibre-gl-shared.mjs from the same public/maplibre folder.
+ */
+function configureMaplibreWorker(): void {
+  const base = import.meta.env.BASE_URL || '/'
+  const workerPath = `${base}maplibre/maplibre-gl-worker.mjs`.replace(
+    /\/{2,}/g,
+    '/',
+  )
+  // new URL with location resolves correctly for both `/` and `/repo/` bases
+  const absolute = new URL(workerPath, window.location.href).href
+  setWorkerUrl(absolute)
+}
+
+configureMaplibreWorker()
 
 /** Free dark basemap — no API key (OpenFreeMap) */
 const MAP_STYLE = 'https://tiles.openfreemap.org/styles/dark'
