@@ -46,7 +46,7 @@ const STATIONS = {
     capacity: 5000,
     depth: 14,
     notes:
-      'Near-west hub in Oak Park along the I-290 corridor, splitting the Downtown–Oakbrook twin-tube route.',
+      'Near-west hub in Oak Park along the I-290 corridor — twin-tube links to Downtown, Oakbrook, O\'Hare, and Midway.',
   },
   oakbrook: {
     name: 'Oakbrook Center',
@@ -132,6 +132,8 @@ const ROUTES = [
   // Split Downtown–Oakbrook at Oak Park (I-290 / Harlem corridor)
   { id: 'downtown-oakpark', from: 'downtown', to: 'oakpark', capacity: 6000, maxDepth: 40 },
   { id: 'oakpark-oakbrook', from: 'oakpark', to: 'oakbrook', capacity: 5500, maxDepth: 38 },
+  { id: 'oakpark-ohare', from: 'oakpark', to: 'ohare', capacity: 5500, maxDepth: 42 },
+  { id: 'oakpark-midway', from: 'oakpark', to: 'midway', capacity: 5500, maxDepth: 40 },
   // Split former Oakbrook–Naperville long-haul at the 88/355 park-and-ride
   { id: 'oakbrook-i88i355', from: 'oakbrook', to: 'i88i355', capacity: 5500, maxDepth: 38 },
   { id: 'i88i355-naperville', from: 'i88i355', to: 'naperville', capacity: 5500, maxDepth: 38 },

@@ -64,7 +64,7 @@
         "status": "planned",
         "capacity_pph": 5000,
         "depth_m": 14,
-        "notes": "Near-west hub in Oak Park along the I-290 corridor, splitting the Downtown–Oakbrook twin-tube route."
+        "notes": "Near-west hub in Oak Park along the I-290 corridor — twin-tube links to Downtown, Oakbrook, O'Hare, and Midway."
       },
       "geometry": {
         "type": "Point",
