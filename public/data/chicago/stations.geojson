@@ -100,7 +100,7 @@
         "status": "planned",
         "capacity_pph": 5000,
         "depth_m": 14,
-        "notes": "Northwest suburban interchange (Schaumburg) — twin-tube links to O'Hare and Naperville."
+        "notes": "Northwest suburban interchange (Schaumburg) — twin-tube links to O'Hare, Naperville, and Evanston."
       },
       "geometry": {
         "type": "Point",
@@ -154,7 +154,7 @@
         "status": "planned",
         "capacity_pph": 5000,
         "depth_m": 14,
-        "notes": "North-shore lakefront hub (Evanston / Northwestern area) — twin-tube link to Downtown only."
+        "notes": "North-shore lakefront hub (Evanston / Northwestern area) — twin-tube links to Downtown and Woodfield."
       },
       "geometry": {
         "type": "Point",

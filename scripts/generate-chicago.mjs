@@ -60,7 +60,7 @@ const STATIONS = {
     lat: 42.0464,
     capacity: 5000,
     depth: 14,
-    notes: 'Northwest suburban interchange (Schaumburg) — twin-tube links to O\'Hare and Naperville.',
+    notes: 'Northwest suburban interchange (Schaumburg) — twin-tube links to O\'Hare, Naperville, and Evanston.',
   },
   southshore: {
     name: 'South Shore Border Hub',
@@ -85,7 +85,7 @@ const STATIONS = {
     lat: 42.052,
     capacity: 5000,
     depth: 14,
-    notes: 'North-shore lakefront hub (Evanston / Northwestern area) — twin-tube link to Downtown only.',
+    notes: 'North-shore lakefront hub (Evanston / Northwestern area) — twin-tube links to Downtown and Woodfield.',
   },
 }
 
@@ -102,6 +102,7 @@ const ROUTES = [
   { id: 'oakbrook-naperville', from: 'oakbrook', to: 'naperville', capacity: 5500, maxDepth: 38 },
   { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
   { id: 'naperville-woodfield', from: 'naperville', to: 'woodfield', capacity: 4500, maxDepth: 40 },
+  { id: 'woodfield-evanston', from: 'woodfield', to: 'evanston', capacity: 4500, maxDepth: 40 },
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
   { id: 'joliet-southshore', from: 'joliet', to: 'southshore', capacity: 4500, maxDepth: 42 },
