@@ -75,7 +75,7 @@ const STATIONS = {
     capacity: 6000,
     depth: 14,
     notes:
-      'Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, and Lombard.',
+      'Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, Lombard, and Bolingbrook.',
   },
   naperville: {
     name: 'Naperville',
@@ -94,7 +94,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield.',
+      'Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield and north to Woodridge.',
   },
   plainfield: {
     name: 'Plainfield',
@@ -170,6 +170,7 @@ const ROUTES = [
   // Split Naperville–Joliet at Bolingbrook
   { id: 'naperville-bolingbrook', from: 'naperville', to: 'bolingbrook', capacity: 4000, maxDepth: 38 },
   { id: 'bolingbrook-joliet', from: 'bolingbrook', to: 'joliet', capacity: 4000, maxDepth: 40 },
+  { id: 'bolingbrook-woodridge', from: 'bolingbrook', to: 'woodridge', capacity: 4000, maxDepth: 36 },
   // Plainfield SW hub
   { id: 'naperville-plainfield', from: 'naperville', to: 'plainfield', capacity: 4000, maxDepth: 38 },
   { id: 'bolingbrook-plainfield', from: 'bolingbrook', to: 'plainfield', capacity: 4000, maxDepth: 36 },

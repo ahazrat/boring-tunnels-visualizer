@@ -118,7 +118,7 @@
         "status": "planned",
         "capacity_pph": 6000,
         "depth_m": 14,
-        "notes": "Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, and Lombard."
+        "notes": "Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, Lombard, and Bolingbrook."
       },
       "geometry": {
         "type": "Point",
@@ -154,7 +154,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield."
+        "notes": "Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield and north to Woodridge."
       },
       "geometry": {
         "type": "Point",
