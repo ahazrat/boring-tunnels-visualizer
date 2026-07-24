@@ -64,7 +64,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "West-suburban retail / employment node."
+        "notes": "West-suburban retail / employment node — corridor west via I-88/I-355 Park & Ride."
       },
       "geometry": {
         "type": "Point",
@@ -77,12 +77,30 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "st-chi-i88i355",
+        "name": "I-88 / I-355 Park & Ride",
+        "status": "planned",
+        "capacity_pph": 6000,
+        "depth_m": 14,
+        "notes": "Large park-and-ride hub at the I-88 / I-355 interchange, sited between Lisle, Downers Grove, and Woodridge for easy freeway access and surface parking."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.047,
+          41.791
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "id": "st-chi-naperville",
         "name": "Naperville",
         "status": "planned",
         "capacity_pph": 5500,
         "depth_m": 14,
-        "notes": "Western suburban hub — links via Oakbrook to Downtown, and twin-tubes to Joliet and Woodfield."
+        "notes": "Western suburban hub — links via I-88/I-355 Park & Ride toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield."
       },
       "geometry": {
         "type": "Point",

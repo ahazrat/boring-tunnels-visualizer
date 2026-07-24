@@ -44,7 +44,18 @@ const STATIONS = {
     lat: 41.8503,
     capacity: 4500,
     depth: 14,
-    notes: 'West-suburban retail / employment node.',
+    notes: 'West-suburban retail / employment node — corridor west via I-88/I-355 Park & Ride.',
+  },
+  i88i355: {
+    name: 'I-88 / I-355 Park & Ride',
+    // I-88 × I-355 interchange — parking-rich commercial core between
+    // Lisle (N), Downers Grove (NE), and Woodridge (S); direct ramp access both freeways
+    lon: -88.047,
+    lat: 41.791,
+    capacity: 6000,
+    depth: 14,
+    notes:
+      'Large park-and-ride hub at the I-88 / I-355 interchange, sited between Lisle, Downers Grove, and Woodridge for easy freeway access and surface parking.',
   },
   naperville: {
     name: 'Naperville',
@@ -52,7 +63,8 @@ const STATIONS = {
     lat: 41.7508,
     capacity: 5500,
     depth: 14,
-    notes: 'Western suburban hub — links via Oakbrook to Downtown, and twin-tubes to Joliet and Woodfield.',
+    notes:
+      'Western suburban hub — links via I-88/I-355 Park & Ride toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield.',
   },
   woodfield: {
     name: 'Woodfield Mall',
@@ -91,15 +103,15 @@ const STATIONS = {
 
 /**
  * Unique edges only — no redundant overlapping laterals.
- * Joliet connects only to Midway (not Downtown).
- * Woodfield connects only to O'Hare (not Downtown).
- * Evanston connects only to Downtown.
+ * I-88/I-355 Park & Ride sits on the Oakbrook–Naperville corridor (replaces direct link).
  */
 const ROUTES = [
   { id: 'downtown-ohare', from: 'downtown', to: 'ohare', capacity: 10000, maxDepth: 48 },
   { id: 'downtown-midway', from: 'downtown', to: 'midway', capacity: 7000, maxDepth: 42 },
   { id: 'downtown-oakbrook', from: 'downtown', to: 'oakbrook', capacity: 6000, maxDepth: 40 },
-  { id: 'oakbrook-naperville', from: 'oakbrook', to: 'naperville', capacity: 5500, maxDepth: 38 },
+  // Split former Oakbrook–Naperville long-haul at the 88/355 park-and-ride
+  { id: 'oakbrook-i88i355', from: 'oakbrook', to: 'i88i355', capacity: 5500, maxDepth: 38 },
+  { id: 'i88i355-naperville', from: 'i88i355', to: 'naperville', capacity: 5500, maxDepth: 38 },
   { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
   { id: 'naperville-woodfield', from: 'naperville', to: 'woodfield', capacity: 4500, maxDepth: 40 },
   { id: 'woodfield-evanston', from: 'woodfield', to: 'evanston', capacity: 4500, maxDepth: 40 },
