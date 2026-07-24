@@ -68,7 +68,7 @@ const STATIONS = {
     lat: 41.5735,
     capacity: 4000,
     depth: 15,
-    notes: 'Southeast metro hub near Illinois–Indiana border.',
+    notes: 'Southeast metro hub near Illinois–Indiana border — links to Downtown and Joliet.',
   },
   joliet: {
     name: 'Joliet',
@@ -76,7 +76,7 @@ const STATIONS = {
     lat: 41.525,
     capacity: 4500,
     depth: 14,
-    notes: 'Southwest suburban hub — twin-tube link to Midway only (no Downtown corridor).',
+    notes: 'Southwest suburban hub — twin-tube links to Midway and South Shore Border (no Downtown corridor).',
   },
   evanston: {
     name: 'Evanston',
@@ -103,6 +103,7 @@ const ROUTES = [
   { id: 'ohare-woodfield', from: 'ohare', to: 'woodfield', capacity: 5500, maxDepth: 40 },
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
+  { id: 'joliet-southshore', from: 'joliet', to: 'southshore', capacity: 4500, maxDepth: 42 },
   { id: 'downtown-evanston', from: 'downtown', to: 'evanston', capacity: 5500, maxDepth: 40 },
 ]
 

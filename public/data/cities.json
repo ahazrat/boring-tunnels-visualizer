@@ -5,7 +5,10 @@
     "shortName": "Vegas Loop",
     "status": "operational",
     "description": "Flagship network. Operational LVCC + resort segments, approved expansion to ~68 miles and 104 stations. Target system capacity ~90,000 passengers/hour.",
-    "center": [-115.172, 36.125],
+    "center": [
+      -115.172,
+      36.125
+    ],
     "zoom": 12.5,
     "pitch": 55,
     "bearing": -20,
@@ -28,7 +31,10 @@
     "shortName": "Music City Loop",
     "status": "under_construction",
     "description": "Under construction corridor (~25 miles) linking downtown Nashville to BNA airport and key destinations.",
-    "center": [-86.72, 36.14],
+    "center": [
+      -86.72,
+      36.14
+    ],
     "zoom": 11.5,
     "pitch": 50,
     "bearing": 15,
@@ -51,7 +57,10 @@
     "shortName": "Dubai Loop",
     "status": "planned",
     "description": "Pilot project ~6.4 km with 4 stations (under contract). Lightweight placeholder dataset for multi-city UX.",
-    "center": [55.27, 25.2],
+    "center": [
+      55.27,
+      25.2
+    ],
     "zoom": 12.2,
     "pitch": 48,
     "bearing": 0,
@@ -74,7 +83,10 @@
     "shortName": "Cybertunnel",
     "status": "planned",
     "description": "Prospective Cybertunnel concept. Placeholder alignment for future expansion of the visualizer.",
-    "center": [-97.74, 30.27],
+    "center": [
+      -97.74,
+      30.27
+    ],
     "zoom": 12,
     "pitch": 45,
     "bearing": -10,
@@ -96,14 +108,17 @@
     "name": "Chicago",
     "shortName": "Chicagoland Loop",
     "status": "planned",
-    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oakbrook (+ Naperville), South Shore (IN border), and Evanston; Woodfield links to O'Hare only; Joliet links to Midway only. Each route is two opposite-direction bores with a subsurface depth bowl.",
-    "center": [-87.82, 41.84],
+    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oakbrook (+ Naperville), South Shore (IN border), and Evanston; Woodfield links to O'Hare only; Joliet links to Midway and South Shore. Each route is two opposite-direction bores with a subsurface depth bowl.",
+    "center": [
+      -87.82,
+      41.84
+    ],
     "zoom": 9.5,
     "pitch": 48,
     "bearing": -8,
     "metrics": {
       "operationalMiles": 0,
-      "plannedMiles": 121,
+      "plannedMiles": 150,
       "operationalStations": 0,
       "plannedStations": 9,
       "targetPph": 50000,
@@ -115,4 +130,3 @@
     }
   }
 ]
-

@@ -118,7 +118,7 @@
         "status": "planned",
         "capacity_pph": 4000,
         "depth_m": 15,
-        "notes": "Southeast metro hub near Illinois–Indiana border."
+        "notes": "Southeast metro hub near Illinois–Indiana border — links to Downtown and Joliet."
       },
       "geometry": {
         "type": "Point",
@@ -136,7 +136,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub — twin-tube link to Midway only (no Downtown corridor)."
+        "notes": "Southwest suburban hub — twin-tube links to Midway and South Shore Border (no Downtown corridor)."
       },
       "geometry": {
         "type": "Point",
