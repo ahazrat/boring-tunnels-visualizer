@@ -52,7 +52,7 @@ const STATIONS = {
     lat: 41.7508,
     capacity: 5500,
     depth: 14,
-    notes: 'Western suburban hub — reached via Oakbrook (no overlapping downtown corridor).',
+    notes: 'Western suburban hub — links via Oakbrook to Downtown, and twin-tube to Joliet.',
   },
   woodfield: {
     name: 'Woodfield Mall',
@@ -76,7 +76,7 @@ const STATIONS = {
     lat: 41.525,
     capacity: 4500,
     depth: 14,
-    notes: 'Southwest suburban hub — twin-tube links to Midway and South Shore Border (no Downtown corridor).',
+    notes: 'Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Naperville (no Downtown corridor).',
   },
   evanston: {
     name: 'Evanston',
@@ -104,6 +104,7 @@ const ROUTES = [
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
   { id: 'joliet-southshore', from: 'joliet', to: 'southshore', capacity: 4500, maxDepth: 42 },
+  { id: 'naperville-joliet', from: 'naperville', to: 'joliet', capacity: 4000, maxDepth: 40 },
   { id: 'downtown-evanston', from: 'downtown', to: 'evanston', capacity: 5500, maxDepth: 40 },
 ]
 

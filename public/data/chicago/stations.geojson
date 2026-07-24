@@ -82,7 +82,7 @@
         "status": "planned",
         "capacity_pph": 5500,
         "depth_m": 14,
-        "notes": "Western suburban hub — reached via Oakbrook (no overlapping downtown corridor)."
+        "notes": "Western suburban hub — links via Oakbrook to Downtown, and twin-tube to Joliet."
       },
       "geometry": {
         "type": "Point",
@@ -136,7 +136,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub — twin-tube links to Midway and South Shore Border (no Downtown corridor)."
+        "notes": "Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Naperville (no Downtown corridor)."
       },
       "geometry": {
         "type": "Point",

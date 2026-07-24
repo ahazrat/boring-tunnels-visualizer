@@ -108,7 +108,7 @@
     "name": "Chicago",
     "shortName": "Chicagoland Loop",
     "status": "planned",
-    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oakbrook (+ Naperville), South Shore (IN border), and Evanston; Woodfield links to O'Hare only; Joliet links to Midway and South Shore. Each route is two opposite-direction bores with a subsurface depth bowl.",
+    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oakbrook (+ Naperville), South Shore (IN border), and Evanston; Woodfield links to O'Hare only; Joliet links to Midway, South Shore, and Naperville. Each route is two opposite-direction bores with a subsurface depth bowl.",
     "center": [
       -87.82,
       41.84
@@ -118,7 +118,7 @@
     "bearing": -8,
     "metrics": {
       "operationalMiles": 0,
-      "plannedMiles": 150,
+      "plannedMiles": 166,
       "operationalStations": 0,
       "plannedStations": 9,
       "targetPph": 50000,
