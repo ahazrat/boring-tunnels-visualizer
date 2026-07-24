@@ -108,7 +108,7 @@
     "name": "Chicago",
     "shortName": "Chicagoland Loop",
     "status": "planned",
-    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oak Park (then Oakbrook via Woodridge to Naperville), South Shore (IN border), and Evanston; Lombard links Oakbrook, Woodridge, and O'Hare; Woodfield links to O'Hare, Naperville, and Evanston; Joliet links to Midway, South Shore, and Naperville. Woodridge is at I-88 \u00d7 I-355 between Lisle, Downers Grove, and Woodridge. Each route is two opposite-direction bores with a subsurface depth bowl.",
+    "description": "Prospective twin-tube network: Downtown spokes to O'Hare, Midway, Oak Park (then Oakbrook via Woodridge to Naperville), South Shore (IN border), and Evanston; Lombard links Oakbrook, Woodridge, and O'Hare; Woodfield links to O'Hare, Naperville, and Evanston; Naperville\u2013Joliet is split at Bolingbrook; Joliet also links Midway and South Shore. Each route is two opposite-direction bores with a subsurface depth bowl.",
     "center": [
       -87.82,
       41.84
@@ -118,9 +118,9 @@
     "bearing": -8,
     "metrics": {
       "operationalMiles": 0,
-      "plannedMiles": 240,
+      "plannedMiles": 242,
       "operationalStations": 0,
-      "plannedStations": 12,
+      "plannedStations": 13,
       "targetPph": 50000,
       "currentPeakPph": 0
     },

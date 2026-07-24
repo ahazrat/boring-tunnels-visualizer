@@ -84,7 +84,17 @@ const STATIONS = {
     capacity: 5500,
     depth: 14,
     notes:
-      'Western suburban hub — links via Woodridge toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield.',
+      'Western suburban hub — links via Woodridge toward Oakbrook/Downtown, twin-tube to Woodfield, and south via Bolingbrook toward Joliet.',
+  },
+  bolingbrook: {
+    name: 'Bolingbrook',
+    // Between Naperville and Joliet (I-55 corridor)
+    lon: -88.0684,
+    lat: 41.6986,
+    capacity: 4500,
+    depth: 14,
+    notes:
+      'Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor along the I-55 approach.',
   },
   woodfield: {
     name: 'Woodfield Mall',
@@ -108,7 +118,8 @@ const STATIONS = {
     lat: 41.525,
     capacity: 4500,
     depth: 14,
-    notes: 'Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Naperville (no Downtown corridor).',
+    notes:
+      'Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Bolingbrook (toward Naperville); no Downtown corridor.',
   },
   evanston: {
     name: 'Evanston',
@@ -146,7 +157,9 @@ const ROUTES = [
   { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
   { id: 'midway-joliet', from: 'midway', to: 'joliet', capacity: 5000, maxDepth: 44 },
   { id: 'joliet-southshore', from: 'joliet', to: 'southshore', capacity: 4500, maxDepth: 42 },
-  { id: 'naperville-joliet', from: 'naperville', to: 'joliet', capacity: 4000, maxDepth: 40 },
+  // Split Naperville–Joliet at Bolingbrook
+  { id: 'naperville-bolingbrook', from: 'naperville', to: 'bolingbrook', capacity: 4000, maxDepth: 38 },
+  { id: 'bolingbrook-joliet', from: 'bolingbrook', to: 'joliet', capacity: 4000, maxDepth: 40 },
   { id: 'downtown-evanston', from: 'downtown', to: 'evanston', capacity: 5500, maxDepth: 40 },
 ]
 

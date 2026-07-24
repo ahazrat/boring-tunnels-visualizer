@@ -136,13 +136,31 @@
         "status": "planned",
         "capacity_pph": 5500,
         "depth_m": 14,
-        "notes": "Western suburban hub — links via Woodridge toward Oakbrook/Downtown, and twin-tubes to Joliet and Woodfield."
+        "notes": "Western suburban hub — links via Woodridge toward Oakbrook/Downtown, twin-tube to Woodfield, and south via Bolingbrook toward Joliet."
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
           -88.1535,
           41.7508
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-chi-bolingbrook",
+        "name": "Bolingbrook",
+        "status": "planned",
+        "capacity_pph": 4500,
+        "depth_m": 14,
+        "notes": "Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor along the I-55 approach."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.0684,
+          41.6986
         ]
       }
     },
@@ -190,7 +208,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Naperville (no Downtown corridor)."
+        "notes": "Southwest suburban hub — twin-tube links to Midway, South Shore Border, and Bolingbrook (toward Naperville); no Downtown corridor."
       },
       "geometry": {
         "type": "Point",
