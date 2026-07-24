@@ -80,11 +80,12 @@ const STATIONS = {
   },
   evanston: {
     name: 'Evanston',
-    lon: -87.6877,
-    lat: 41.8869,
+    // Northwestern / Evanston lakefront (Lake Michigan) — ~12 mi N of the Loop
+    lon: -87.6695,
+    lat: 42.052,
     capacity: 5000,
     depth: 14,
-    notes: 'North-shore suburban hub — twin-tube link to Downtown only.',
+    notes: 'North-shore lakefront hub (Evanston / Northwestern area) — twin-tube link to Downtown only.',
   },
 }
 
