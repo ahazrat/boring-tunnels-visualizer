@@ -37,6 +37,10 @@ export interface TunnelProperties {
   depth_m: number
   capacity_pph: number
   notes?: string
+  direction?: 'forward' | 'return'
+  pair_id?: string
+  from?: string
+  to?: string
 }
 
 export interface StationProperties {
@@ -48,15 +52,25 @@ export interface StationProperties {
   notes?: string
 }
 
+export type Coord2 = [number, number]
+export type Coord3 = [number, number, number]
+export type PathCoord = Coord2 | Coord3
+
 export type TunnelFeature = GeoJSON.Feature<GeoJSON.LineString, TunnelProperties>
 export type StationFeature = GeoJSON.Feature<GeoJSON.Point, StationProperties>
 export type TunnelCollection = GeoJSON.FeatureCollection<GeoJSON.LineString, TunnelProperties>
 export type StationCollection = GeoJSON.FeatureCollection<GeoJSON.Point, StationProperties>
 
+/** Network status layers + optional heavy graphics (graphics default OFF for performance) */
 export interface LayerVisibility {
   operational: boolean
   under_construction: boolean
   planned: boolean
-  particles: boolean
   stations: boolean
+  /** Soft halo around tunnels — GPU cost */
+  tunnelGlow: boolean
+  /** Animated vehicle/particle flows — high cost */
+  particles: boolean
+  /** Render path elevation (subsurface bowl) in 3D — moderate cost */
+  depth3d: boolean
 }

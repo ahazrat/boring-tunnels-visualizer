@@ -1,0 +1,258 @@
+/**
+ * Generate Chicago twin-tube corridors:
+ * - unique non-overlapping edges (hub + one extension)
+ * - straight plan view between stations
+ * - subsurface depth profile (down then up)
+ * - two parallel opposite-direction tunnels per route
+ */
+import { writeFileSync, mkdirSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const outDir = join(__dirname, '../public/data/chicago')
+
+/** @type {Record<string, { name: string, lon: number, lat: number, capacity: number, depth: number, notes: string }>} */
+const STATIONS = {
+  downtown: {
+    name: 'Downtown Loop',
+    lon: -87.6298,
+    lat: 41.8781,
+    capacity: 12000,
+    depth: 14,
+    notes: 'Central interchange hub for all regional spokes.',
+  },
+  ohare: {
+    name: "O'Hare International (ORD)",
+    lon: -87.9073,
+    lat: 41.9742,
+    capacity: 10000,
+    depth: 16,
+    notes: 'Northwest airport terminus.',
+  },
+  midway: {
+    name: 'Midway International (MDW)',
+    lon: -87.7522,
+    lat: 41.7868,
+    capacity: 7000,
+    depth: 15,
+    notes: 'Southwest-side airport terminus.',
+  },
+  oakbrook: {
+    name: 'Oakbrook Center',
+    lon: -87.9531,
+    lat: 41.8503,
+    capacity: 4500,
+    depth: 14,
+    notes: 'West-suburban retail / employment node.',
+  },
+  naperville: {
+    name: 'Naperville',
+    lon: -88.1535,
+    lat: 41.7508,
+    capacity: 5500,
+    depth: 14,
+    notes: 'Western suburban hub — reached via Oakbrook (no overlapping downtown corridor).',
+  },
+  woodfield: {
+    name: 'Woodfield Mall',
+    lon: -88.0369,
+    lat: 42.0464,
+    capacity: 5000,
+    depth: 14,
+    notes: 'Northwest suburban interchange (Schaumburg).',
+  },
+  southshore: {
+    name: 'South Shore Border Hub',
+    lon: -87.5205,
+    lat: 41.5735,
+    capacity: 4000,
+    depth: 15,
+    notes: 'Southeast metro hub near Illinois–Indiana border.',
+  },
+  joliet: {
+    name: 'Joliet',
+    lon: -88.0817,
+    lat: 41.525,
+    capacity: 4500,
+    depth: 14,
+    notes: 'Southwest suburban hub.',
+  },
+}
+
+/**
+ * Unique edges only — star from Downtown + Oakbrook→Naperville.
+ * No second corridor between the same pair; no redundant overlapping laterals.
+ */
+const ROUTES = [
+  { id: 'downtown-ohare', from: 'downtown', to: 'ohare', capacity: 10000, maxDepth: 48 },
+  { id: 'downtown-midway', from: 'downtown', to: 'midway', capacity: 7000, maxDepth: 42 },
+  { id: 'downtown-oakbrook', from: 'downtown', to: 'oakbrook', capacity: 6000, maxDepth: 40 },
+  { id: 'oakbrook-naperville', from: 'oakbrook', to: 'naperville', capacity: 5500, maxDepth: 38 },
+  { id: 'downtown-woodfield', from: 'downtown', to: 'woodfield', capacity: 5500, maxDepth: 44 },
+  { id: 'downtown-southshore', from: 'downtown', to: 'southshore', capacity: 5000, maxDepth: 42 },
+  { id: 'downtown-joliet', from: 'downtown', to: 'joliet', capacity: 5000, maxDepth: 46 },
+]
+
+const SAMPLES = 28
+/** Twin-tube centerline separation (meters) */
+const TUBE_OFFSET_M = 18
+
+function metersToDeg(lat, eastM, northM) {
+  const latRad = (lat * Math.PI) / 180
+  const dLat = northM / 111_320
+  const dLon = eastM / (111_320 * Math.cos(latRad))
+  return { dLon, dLat }
+}
+
+/**
+ * Smooth depth profile: shallow at portals, deepest mid-run (sinusoidal bowl).
+ * Returns meters below surface (positive depth).
+ */
+function depthAt(t, portalDepth, maxDepth) {
+  // sin(πt) peaks at 1 in the middle
+  const bowl = Math.sin(Math.PI * t)
+  return portalDepth + (maxDepth - portalDepth) * bowl
+}
+
+function buildCenterline(a, b, portalA, portalB, maxDepth, samples) {
+  /** @type {[number, number, number][]} */
+  const coords = []
+  for (let i = 0; i <= samples; i++) {
+    const t = i / samples
+    const lon = a.lon + (b.lon - a.lon) * t
+    const lat = a.lat + (b.lat - a.lat) * t
+    const portal = portalA + (portalB - portalA) * t
+    const depth = depthAt(t, portal, maxDepth)
+    // GeoJSON / deck.gl elevation is meters above sea-ish; use negative for subsurface
+    const elev = -depth
+    coords.push([lon, lat, elev])
+  }
+  return coords
+}
+
+function offsetLine(coords, offsetM) {
+  if (coords.length < 2) return coords
+  const mid = coords[Math.floor(coords.length / 2)]
+  const first = coords[0]
+  const last = coords[coords.length - 1]
+  // Plan bearing of the straight shot
+  const dLon = last[0] - first[0]
+  const dLat = last[1] - first[1]
+  const len = Math.hypot(dLon, dLat) || 1
+  // Perpendicular unit in lon/lat (approx), scaled via meters at mid-lat
+  const ux = -dLat / len
+  const uy = dLon / len
+  // Convert desired meter offset to lon/lat using mid latitude
+  const { dLon: oLon, dLat: oLat } = metersToDeg(mid[1], ux * offsetM, uy * offsetM)
+  // Normalize ux,uy in lon/lat space then apply meter conversion properly:
+  // Better: perpendicular in meters along the route's geographic bearing
+  const bearing = Math.atan2(dLon * Math.cos((mid[1] * Math.PI) / 180), dLat)
+  const perp = bearing + Math.PI / 2
+  const east = Math.sin(perp) * offsetM
+  const north = Math.cos(perp) * offsetM
+  const off = metersToDeg(mid[1], east, north)
+
+  return coords.map(([lon, lat, elev]) => [lon + off.dLon, lat + off.dLat, elev])
+}
+
+function reverseCoords(coords) {
+  return [...coords].reverse()
+}
+
+function haversineKm(a, b) {
+  const R = 6371
+  const toR = (d) => (d * Math.PI) / 180
+  const dLat = toR(b.lat - a.lat)
+  const dLon = toR(b.lon - a.lon)
+  const s =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLon / 2) ** 2
+  return 2 * R * Math.asin(Math.sqrt(s))
+}
+
+// --- stations geojson ---
+const stationsFc = {
+  type: 'FeatureCollection',
+  name: 'chicago-stations',
+  features: Object.entries(STATIONS).map(([id, s]) => ({
+    type: 'Feature',
+    properties: {
+      id: `st-chi-${id}`,
+      name: s.name,
+      status: 'planned',
+      capacity_pph: s.capacity,
+      depth_m: s.depth,
+      notes: s.notes,
+    },
+    geometry: {
+      type: 'Point',
+      coordinates: [s.lon, s.lat],
+    },
+  })),
+}
+
+// --- tunnels geojson ---
+const tunnelFeatures = []
+let totalMiles = 0
+
+for (const route of ROUTES) {
+  const A = STATIONS[route.from]
+  const B = STATIONS[route.to]
+  const miles = haversineKm(A, B) * 0.621371
+  totalMiles += miles
+
+  const center = buildCenterline(A, B, A.depth, B.depth, route.maxDepth, SAMPLES)
+  const forward = offsetLine(center, TUBE_OFFSET_M / 2)
+  const reverse = reverseCoords(offsetLine(center, -TUBE_OFFSET_M / 2))
+
+  const baseName = `${A.name.split('(')[0].trim()} ↔ ${B.name.split('(')[0].trim()}`
+
+  tunnelFeatures.push({
+    type: 'Feature',
+    properties: {
+      id: `${route.id}-nb`,
+      name: `${baseName} · Tube A`,
+      status: 'planned',
+      depth_m: route.maxDepth,
+      capacity_pph: Math.round(route.capacity / 2),
+      direction: 'forward',
+      pair_id: route.id,
+      from: route.from,
+      to: route.to,
+      notes: `Twin tube A (outbound). Straight plan alignment with subsurface bowl (portal ~${A.depth}–${B.depth}m, mid ~${route.maxDepth}m). ~${miles.toFixed(1)} mi.`,
+    },
+    geometry: { type: 'LineString', coordinates: forward },
+  })
+
+  tunnelFeatures.push({
+    type: 'Feature',
+    properties: {
+      id: `${route.id}-sb`,
+      name: `${baseName} · Tube B`,
+      status: 'planned',
+      depth_m: route.maxDepth,
+      capacity_pph: Math.round(route.capacity / 2),
+      direction: 'return',
+      pair_id: route.id,
+      from: route.to,
+      to: route.from,
+      notes: `Twin tube B (return). Parallel opposite-direction bore; no shared track with Tube A.`,
+    },
+    geometry: { type: 'LineString', coordinates: reverse },
+  })
+}
+
+const tunnelsFc = {
+  type: 'FeatureCollection',
+  name: 'chicago-tunnels',
+  features: tunnelFeatures,
+}
+
+mkdirSync(outDir, { recursive: true })
+writeFileSync(join(outDir, 'stations.geojson'), JSON.stringify(stationsFc, null, 2) + '\n')
+writeFileSync(join(outDir, 'tunnels.geojson'), JSON.stringify(tunnelsFc, null, 2) + '\n')
+
+console.log(
+  `Chicago: ${stationsFc.features.length} stations, ${ROUTES.length} routes × 2 tubes = ${tunnelFeatures.length} tunnels, ~${totalMiles.toFixed(1)} corridor-mi`,
+)

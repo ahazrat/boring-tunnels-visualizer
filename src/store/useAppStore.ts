@@ -35,6 +35,17 @@ interface AppState {
   getCity: () => CityConfig | null
 }
 
+/** Lean defaults: status layers on as needed; heavy graphics OFF */
+const DEFAULT_LAYERS: LayerVisibility = {
+  operational: true,
+  under_construction: true,
+  planned: false,
+  stations: true,
+  tunnelGlow: false,
+  particles: false,
+  depth3d: false,
+}
+
 export const useAppStore = create<AppState>((set, get) => ({
   cities: [],
   cityId: null,
@@ -42,13 +53,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   stations: null,
   loading: false,
   error: null,
-  layers: {
-    operational: true,
-    under_construction: true,
-    planned: false,
-    particles: true,
-    stations: true,
-  },
+  layers: { ...DEFAULT_LAYERS },
   cameraMode: 'orbit',
   whatIfFactor: 1,
   selectedStation: null,
@@ -92,7 +97,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       ])
       if (!tRes.ok || !sRes.ok) throw new Error('Failed to load city dataset')
       const [tunnels, stations] = await Promise.all([tRes.json(), sRes.json()])
-      // Prospective-only cities (e.g. Chicago) need Planned layer on or the map looks empty
+      // Prospective-only cities need Planned status on; keep heavy graphics off
       const hasOperational = Boolean(
         tunnels?.features?.some(
           (f: { properties?: { status?: string } }) =>
@@ -107,7 +112,15 @@ export const useAppStore = create<AppState>((set, get) => ({
         flyToken: get().flyToken + 1,
         layers: hasOperational
           ? layers
-          : { ...layers, planned: true, under_construction: true },
+          : {
+              ...layers,
+              planned: true,
+              under_construction: true,
+              // never auto-enable costly graphics
+              tunnelGlow: false,
+              particles: false,
+              depth3d: false,
+            },
       })
     } catch (e) {
       set({

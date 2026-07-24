@@ -5,13 +5,90 @@ import { STATUS_COLORS, statusLabel } from '../lib/colors'
 import { estimateVisibleThroughput } from '../lib/throughput'
 import type { LayerVisibility, TunnelStatus } from '../types'
 
-const LAYER_KEYS: { key: keyof LayerVisibility; label: string; status?: TunnelStatus }[] = [
+const STATUS_LAYER_KEYS: {
+  key: keyof LayerVisibility
+  label: string
+  status?: TunnelStatus
+}[] = [
   { key: 'operational', label: 'Operational', status: 'operational' },
   { key: 'under_construction', label: 'Under Construction', status: 'under_construction' },
   { key: 'planned', label: 'Planned / Future', status: 'planned' },
   { key: 'stations', label: 'Stations' },
-  { key: 'particles', label: 'Vehicle flows' },
 ]
+
+/** Heavy graphics — all default OFF for snappy performance */
+const GRAPHICS_TOGGLES: {
+  key: keyof LayerVisibility
+  label: string
+  hint: string
+  cost: 'low' | 'med' | 'high'
+}[] = [
+  {
+    key: 'tunnelGlow',
+    label: 'Tunnel glow',
+    hint: 'Soft halo under paths',
+    cost: 'med',
+  },
+  {
+    key: 'depth3d',
+    label: 'Depth profile',
+    hint: 'Subsurface bowl (down then up)',
+    cost: 'med',
+  },
+  {
+    key: 'particles',
+    label: 'Vehicle flows',
+    hint: 'Animated traffic particles',
+    cost: 'high',
+  },
+]
+
+function CostPill({ cost }: { cost: 'low' | 'med' | 'high' }) {
+  const styles =
+    cost === 'high'
+      ? 'border-rose-400/40 text-rose-300/90'
+      : cost === 'med'
+        ? 'border-amber-400/40 text-amber-200/90'
+        : 'border-emerald-400/40 text-emerald-300/90'
+  return (
+    <span
+      className={`rounded px-1.5 py-0.5 text-[9px] uppercase tracking-wider ${styles} border`}
+    >
+      {cost}
+    </span>
+  )
+}
+
+function ToggleSwitch({
+  checked,
+  onChange,
+  label,
+}: {
+  checked: boolean
+  onChange: (v: boolean) => void
+  label: string
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      onClick={() => onChange(!checked)}
+      className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+        checked
+          ? 'bg-cyan-500/80 shadow-[0_0_12px_rgba(0,240,255,0.35)]'
+          : 'bg-zinc-700'
+      }`}
+    >
+      <span
+        className={`absolute top-0.5 left-0.5 size-5 rounded-full bg-white shadow transition-transform ${
+          checked ? 'translate-x-5' : 'translate-x-0'
+        }`}
+      />
+    </button>
+  )
+}
 
 export function SidePanel() {
   const cities = useAppStore((s) => s.cities)
@@ -31,8 +108,6 @@ export function SidePanel() {
   const tunnels = useAppStore((s) => s.tunnels)
   const city = useAppStore((s) => s.cities.find((c) => c.id === s.cityId) ?? null)
 
-  // Compute outside the store selector — returning a new object from useAppStore
-  // every call causes React 19 "getSnapshot should be cached" infinite loops.
   const throughput = useMemo(
     () =>
       estimateVisibleThroughput(
@@ -52,6 +127,8 @@ export function SidePanel() {
       whatIfFactor,
     ],
   )
+
+  const graphicsOn = GRAPHICS_TOGGLES.filter((g) => layers[g.key]).length
 
   return (
     <motion.aside
@@ -103,13 +180,13 @@ export function SidePanel() {
         )}
       </section>
 
-      {/* Layers */}
+      {/* Network layers */}
       <section className="space-y-2">
         <h2 className="text-[11px] font-medium uppercase tracking-wider text-zinc-400">
-          Layers
+          Network layers
         </h2>
         <ul className="space-y-1.5">
-          {LAYER_KEYS.map(({ key, label, status }) => (
+          {STATUS_LAYER_KEYS.map(({ key, label, status }) => (
             <li key={key}>
               <label className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-1 hover:bg-white/5">
                 <input
@@ -121,7 +198,10 @@ export function SidePanel() {
                 {status && (
                   <span
                     className="inline-block size-2 rounded-full"
-                    style={{ background: STATUS_COLORS[status].hex, boxShadow: `0 0 8px ${STATUS_COLORS[status].glow}` }}
+                    style={{
+                      background: STATUS_COLORS[status].hex,
+                      boxShadow: `0 0 8px ${STATUS_COLORS[status].glow}`,
+                    }}
                   />
                 )}
                 <span className="text-sm text-zinc-200">{label}</span>
@@ -129,6 +209,59 @@ export function SidePanel() {
             </li>
           ))}
         </ul>
+      </section>
+
+      {/* Graphics performance toggles */}
+      <section className="space-y-3 rounded-xl border border-white/10 bg-black/30 p-3">
+        <div className="flex items-center justify-between gap-2">
+          <div>
+            <h2 className="text-[11px] font-medium uppercase tracking-wider text-zinc-300">
+              Graphics
+            </h2>
+            <p className="text-[10px] text-zinc-500">
+              Default off for smooth performance
+            </p>
+          </div>
+          <span className="text-[10px] tabular-nums text-zinc-500">
+            {graphicsOn}/{GRAPHICS_TOGGLES.length} on
+          </span>
+        </div>
+
+        <ul className="space-y-3">
+          {GRAPHICS_TOGGLES.map(({ key, label, hint, cost }) => (
+            <li
+              key={key}
+              className="flex items-center justify-between gap-3 rounded-lg border border-white/5 bg-white/[0.03] px-2.5 py-2"
+            >
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-zinc-100">{label}</span>
+                  <CostPill cost={cost} />
+                </div>
+                <p className="text-[10px] leading-snug text-zinc-500">{hint}</p>
+              </div>
+              <ToggleSwitch
+                label={label}
+                checked={layers[key]}
+                onChange={(v) => setLayer(key, v)}
+              />
+            </li>
+          ))}
+        </ul>
+
+        {graphicsOn > 0 && (
+          <button
+            type="button"
+            onClick={() => {
+              setLayer('tunnelGlow', false)
+              setLayer('particles', false)
+              setLayer('depth3d', false)
+            }}
+            className="w-full rounded-lg border border-white/10 py-1.5 text-[11px] text-zinc-400 transition hover:border-cyan-400/30 hover:text-cyan-200"
+          >
+            Turn all graphics off
+          </button>
+        )}
       </section>
 
       {/* Throughput dashboard */}
@@ -160,7 +293,7 @@ export function SidePanel() {
             <span className="text-right text-zinc-200">
               {city.metrics.operationalStations} / {city.metrics.plannedStations}
             </span>
-            <span>Visible segments</span>
+            <span>Visible tubes</span>
             <span className="text-right text-zinc-200">{throughput.tunnelCount}</span>
           </div>
         )}
@@ -270,8 +403,8 @@ export function SidePanel() {
 
       <footer className="mt-auto space-y-1 border-t border-white/10 pt-3 text-[10px] leading-relaxed text-zinc-500">
         <p>
-          Alignments are schematic, digitized from public maps for visualization — not
-          official engineering drawings.
+          Alignments are schematic for visualization — not official engineering drawings.
+          Chicago uses unique twin-tube corridors (no overlapping routes).
         </p>
         <p>Basemap © OpenFreeMap · OSM contributors · Static GitHub Pages build</p>
       </footer>

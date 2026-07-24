@@ -18,7 +18,12 @@ import {
   deviceParticleMultiplier,
   particleBudget,
 } from '../lib/throughput'
-import type { StationFeature, TunnelFeature, TunnelStatus } from '../types'
+import type {
+  PathCoord,
+  StationFeature,
+  TunnelFeature,
+  TunnelStatus,
+} from '../types'
 
 /**
  * Absolute worker URL under Vite `base` (required for GitHub Pages subpath).
@@ -30,44 +35,61 @@ function configureMaplibreWorker(): void {
     /\/{2,}/g,
     '/',
   )
-  // new URL with location resolves correctly for both `/` and `/repo/` bases
   const absolute = new URL(workerPath, window.location.href).href
   setWorkerUrl(absolute)
 }
 
 configureMaplibreWorker()
 
-/** Free dark basemap — no API key (OpenFreeMap) */
 const MAP_STYLE = 'https://tiles.openfreemap.org/styles/dark'
 
 interface Trip {
-  path: [number, number][]
+  path: PathCoord[]
   timestamps: number[]
   color: [number, number, number]
   status: TunnelStatus
+}
+
+/** Flatten 3D path to 2D when depth profile is off (cheaper + flatter map). */
+function pathForRender(
+  coords: GeoJSON.Position[],
+  depth3d: boolean,
+): PathCoord[] {
+  if (depth3d) {
+    return coords.map((c) => {
+      if (c.length >= 3) return [c[0], c[1], c[2]] as PathCoord
+      return [c[0], c[1], 0] as PathCoord
+    })
+  }
+  return coords.map((c) => [c[0], c[1]] as PathCoord)
 }
 
 function buildTrips(
   tunnels: TunnelFeature[],
   layers: Record<TunnelStatus, boolean>,
   whatIf: number,
+  depth3d: boolean,
 ): Trip[] {
-  const mult = deviceParticleMultiplier() * whatIf
+  // Cap particles hard for snappy UX even when enabled
+  const mult = deviceParticleMultiplier() * whatIf * 0.45
   const trips: Trip[] = []
 
   for (const feature of tunnels) {
     const status = feature.properties.status
     if (!layers[status]) continue
 
-    const coords = feature.geometry.coordinates as [number, number][]
-    if (coords.length < 2) continue
-
+    const raw = feature.geometry.coordinates
+    if (raw.length < 2) continue
+    const coords = pathForRender(raw, depth3d)
     const count = Math.max(
       1,
-      Math.round(particleBudget(feature.properties.capacity_pph) * mult * 0.35),
+      Math.min(
+        8,
+        Math.round(particleBudget(feature.properties.capacity_pph, 40) * mult * 0.25),
+      ),
     )
     const color = statusRgba(status).slice(0, 3) as [number, number, number]
-    const duration = 8 + Math.random() * 6
+    const duration = 10 + Math.random() * 6
 
     for (let i = 0; i < count; i++) {
       const offset = Math.random() * duration
@@ -102,6 +124,8 @@ export function MapView() {
   const timeOfDay = useAppStore((s) => s.timeOfDay)
   const setSelectedStation = useAppStore((s) => s.setSelectedStation)
 
+  const needsAnimation = layers.particles
+
   const trips = useMemo(() => {
     if (!tunnels || !layers.particles) return []
     return buildTrips(
@@ -112,6 +136,7 @@ export function MapView() {
         planned: layers.planned,
       },
       whatIfFactor,
+      layers.depth3d,
     )
   }, [tunnels, layers, whatIfFactor])
 
@@ -131,10 +156,12 @@ export function MapView() {
         style: MAP_STYLE,
         center: [-115.172, 36.125],
         zoom: 12.2,
-        pitch: 55,
+        pitch: 45,
         bearing: -20,
         attributionControl: {},
         maxPitch: 75,
+        // Prefer lower GPU load by default
+        maxTileCacheSize: 50,
       })
 
       map.addControl(new NavigationControl({ visualizePitch: true }), 'bottom-right')
@@ -148,7 +175,6 @@ export function MapView() {
 
       map.on('error', (e) => {
         console.error('[maplibre]', e.error)
-        // Style/tile errors shouldn't blank the whole UI; only surface hard init failures
       })
 
       map.once('load', () => {
@@ -191,22 +217,24 @@ export function MapView() {
     }
   }, [])
 
-  // Fly to city
+  // Fly to city — slightly lower pitch when depth3d off for snappier feel
   useEffect(() => {
     const map = mapRef.current
     if (!map || !city || flyToken === 0 || !mapReady) return
 
+    const pitch = layers.depth3d ? Math.max(city.pitch, 55) : Math.min(city.pitch, 48)
+
     map.flyTo({
       center: city.center,
       zoom: city.zoom,
-      pitch: city.pitch,
+      pitch,
       bearing: city.bearing,
-      duration: 2200,
+      duration: 1600,
       essential: true,
     })
-  }, [flyToken, cityId, city, mapReady])
+  }, [flyToken, cityId, city, mapReady, layers.depth3d])
 
-  // First-person mode: follow tunnel path roughly
+  // First-person tunnel ride
   useEffect(() => {
     const map = mapRef.current
     if (!map || !tunnels || cameraMode !== 'first_person' || !mapReady) return
@@ -216,7 +244,7 @@ export function MapView() {
       tunnels.features[0]
     if (!operational) return
 
-    const coords = operational.geometry.coordinates as [number, number][]
+    const coords = operational.geometry.coordinates
     let i = 0
     let cancelled = false
 
@@ -226,7 +254,7 @@ export function MapView() {
       const b = coords[(i + 1) % coords.length]
       const bearing = (Math.atan2(b[0] - a[0], b[1] - a[1]) * 180) / Math.PI
       mapRef.current.easeTo({
-        center: a,
+        center: [a[0], a[1]],
         zoom: 16.5,
         pitch: 70,
         bearing,
@@ -243,15 +271,15 @@ export function MapView() {
     }
   }, [cameraMode, tunnels, cityId, mapReady])
 
-  // Deck layers + particle animation
+  // Deck layers — animate only when particles are enabled
   useEffect(() => {
     const overlay = overlayRef.current
     if (!overlay || !mapReady) return
 
     let cancelled = false
-    const loop = () => {
+
+    const paint = () => {
       if (cancelled) return
-      timeRef.current = (timeRef.current + 0.04) % 30
 
       const tunnelFeatures = (tunnels?.features ?? []) as TunnelFeature[]
       const stationFeatures = (stations?.features ?? []) as StationFeature[]
@@ -268,44 +296,60 @@ export function MapView() {
             ? 0.7
             : 0.4
 
-      const deckLayers: Layer[] = [
-        new PathLayer<TunnelFeature>({
-          id: 'tunnels-glow',
-          data: visibleTunnels,
-          getPath: (d) => d.geometry.coordinates as [number, number][],
-          getColor: (d) => {
-            const [r, g, b, a] = statusRgba(d.properties.status)
-            return [r, g, b, Math.round(a * 0.35 * night)]
-          },
-          getWidth: 18,
-          widthUnits: 'meters',
-          widthMinPixels: 6,
-          capRounded: true,
-          jointRounded: true,
-          pickable: false,
-        }),
+      const deckLayers: Layer[] = []
+
+      if (layers.tunnelGlow) {
+        deckLayers.push(
+          new PathLayer<TunnelFeature>({
+            id: 'tunnels-glow',
+            data: visibleTunnels,
+            getPath: (d) => pathForRender(d.geometry.coordinates, layers.depth3d),
+            getColor: (d) => {
+              const [r, g, b, a] = statusRgba(d.properties.status)
+              return [r, g, b, Math.round(a * 0.32 * night)]
+            },
+            getWidth: 16,
+            widthUnits: 'meters',
+            widthMinPixels: 5,
+            capRounded: true,
+            jointRounded: true,
+            pickable: false,
+            updateTriggers: {
+              getPath: layers.depth3d,
+            },
+          }),
+        )
+      }
+
+      deckLayers.push(
         new PathLayer<TunnelFeature>({
           id: 'tunnels-core',
           data: visibleTunnels,
-          getPath: (d) => d.geometry.coordinates as [number, number][],
+          getPath: (d) => pathForRender(d.geometry.coordinates, layers.depth3d),
           getColor: (d) => {
             const [r, g, b, a] = statusRgba(d.properties.status)
+            // Slightly dim return tubes so twin pair is readable
+            const dirBoost = d.properties.direction === 'return' ? 0.75 : 1
             const alpha =
               d.properties.status === 'planned'
-                ? Math.round(a * 0.75 * night)
-                : Math.round(a * night)
+                ? Math.round(a * 0.8 * night * dirBoost)
+                : Math.round(a * night * dirBoost)
             return [r, g, b, alpha]
           },
-          getWidth: (d) => (d.properties.status === 'operational' ? 10 : 7),
+          getWidth: (d) => (d.properties.status === 'operational' ? 9 : 6),
           widthUnits: 'meters',
-          widthMinPixels: 3,
+          widthMinPixels: 2,
           capRounded: true,
           jointRounded: true,
           pickable: true,
           autoHighlight: true,
           highlightColor: [255, 255, 255, 80],
+          updateTriggers: {
+            getPath: layers.depth3d,
+            getColor: layers.depth3d,
+          },
         }),
-      ]
+      )
 
       if (layers.particles && trips.length > 0) {
         deckLayers.push(
@@ -314,46 +358,70 @@ export function MapView() {
             data: trips,
             getPath: (d) => d.path,
             getTimestamps: (d) => d.timestamps,
-            getColor: (d) => [...d.color, 230] as [number, number, number, number],
-            getWidth: 3,
-            widthMinPixels: 2,
-            trailLength: 1.2,
+            getColor: (d) => [...d.color, 220] as [number, number, number, number],
+            getWidth: 2.5,
+            widthMinPixels: 1.5,
+            trailLength: 1.0,
             currentTime: timeRef.current,
           }),
         )
       }
 
-      deckLayers.push(
-        new ScatterplotLayer<StationFeature>({
-          id: 'stations',
-          data: visibleStations,
-          getPosition: (d) => d.geometry.coordinates as [number, number],
-          getFillColor: (d) => statusRgba(d.properties.status),
-          getLineColor: [255, 255, 255, 180],
-          getRadius: 55,
-          radiusUnits: 'meters',
-          radiusMinPixels: 6,
-          radiusMaxPixels: 18,
-          stroked: true,
-          lineWidthMinPixels: 1.5,
-          pickable: true,
-          autoHighlight: true,
-          onClick: (info: PickingInfo<StationFeature>) => {
-            if (info.object) setSelectedStation(info.object)
-          },
-        }),
-      )
+      if (layers.stations) {
+        deckLayers.push(
+          new ScatterplotLayer<StationFeature>({
+            id: 'stations',
+            data: visibleStations,
+            getPosition: (d) => d.geometry.coordinates as [number, number],
+            getFillColor: (d) => statusRgba(d.properties.status),
+            getLineColor: [255, 255, 255, 180],
+            getRadius: 70,
+            radiusUnits: 'meters',
+            radiusMinPixels: 5,
+            radiusMaxPixels: 16,
+            stroked: true,
+            lineWidthMinPixels: 1.5,
+            pickable: true,
+            autoHighlight: true,
+            onClick: (info: PickingInfo<StationFeature>) => {
+              if (info.object) setSelectedStation(info.object)
+            },
+          }),
+        )
+      }
 
       overlay.setProps({ layers: deckLayers })
-      animRef.current = requestAnimationFrame(loop)
     }
 
-    animRef.current = requestAnimationFrame(loop)
+    if (needsAnimation) {
+      const loop = () => {
+        if (cancelled) return
+        timeRef.current = (timeRef.current + 0.04) % 30
+        paint()
+        animRef.current = requestAnimationFrame(loop)
+      }
+      animRef.current = requestAnimationFrame(loop)
+      return () => {
+        cancelled = true
+        cancelAnimationFrame(animRef.current)
+      }
+    }
+
+    // Static paint — no rAF churn
+    paint()
     return () => {
       cancelled = true
-      cancelAnimationFrame(animRef.current)
     }
-  }, [tunnels, stations, layers, trips, timeOfDay, setSelectedStation, mapReady])
+  }, [
+    tunnels,
+    stations,
+    layers,
+    trips,
+    timeOfDay,
+    setSelectedStation,
+    mapReady,
+    needsAnimation,
+  ])
 
   return (
     <div className="relative h-full min-h-0 w-full">
@@ -364,9 +432,6 @@ export function MapView() {
           <div className="max-w-md rounded-xl border border-rose-500/40 bg-zinc-950 p-4 text-sm text-rose-200">
             <p className="font-semibold text-rose-100">Map failed to start</p>
             <p className="mt-2 text-rose-200/80">{mapError}</p>
-            <p className="mt-3 text-xs text-zinc-500">
-              Try hard-refreshing, or run: rm -rf node_modules/.vite && npm run dev
-            </p>
           </div>
         </div>
       )}

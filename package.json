@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "typecheck": "tsc -b --pretty"
+    "typecheck": "tsc -b --pretty",
+    "generate:chicago": "node scripts/generate-chicago.mjs"
   },
   "dependencies": {
     "@deck.gl/core": "^9.3.7",
