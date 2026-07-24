@@ -10,7 +10,7 @@
         "status": "planned",
         "capacity_pph": 12000,
         "depth_m": 14,
-        "notes": "Central interchange hub for all regional spokes."
+        "notes": "Central interchange hub for all regional spokes — west corridor via Oak Park to Oakbrook."
       },
       "geometry": {
         "type": "Point",
@@ -59,12 +59,30 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "st-chi-oakpark",
+        "name": "Oak Park",
+        "status": "planned",
+        "capacity_pph": 5000,
+        "depth_m": 14,
+        "notes": "Near-west hub in Oak Park along the I-290 corridor, splitting the Downtown–Oakbrook twin-tube route."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.7945,
+          41.8728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "id": "st-chi-oakbrook",
         "name": "Oakbrook Center",
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "West-suburban retail / employment node — corridor west via I-88/I-355 Park & Ride."
+        "notes": "West-suburban retail / employment node — east to Oak Park/Downtown, west via I-88/I-355 Park & Ride."
       },
       "geometry": {
         "type": "Point",

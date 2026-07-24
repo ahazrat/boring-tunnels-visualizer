@@ -20,7 +20,7 @@ const STATIONS = {
     lat: 41.8781,
     capacity: 12000,
     depth: 14,
-    notes: 'Central interchange hub for all regional spokes.',
+    notes: 'Central interchange hub for all regional spokes — west corridor via Oak Park to Oakbrook.',
   },
   ohare: {
     name: "O'Hare International (ORD)",
@@ -38,13 +38,23 @@ const STATIONS = {
     depth: 15,
     notes: 'Southwest-side airport terminus.',
   },
+  oakpark: {
+    name: 'Oak Park',
+    // Near Harlem Ave / I-290 (Eisenhower) — between Loop and Oakbrook
+    lon: -87.7945,
+    lat: 41.8728,
+    capacity: 5000,
+    depth: 14,
+    notes:
+      'Near-west hub in Oak Park along the I-290 corridor, splitting the Downtown–Oakbrook twin-tube route.',
+  },
   oakbrook: {
     name: 'Oakbrook Center',
     lon: -87.9531,
     lat: 41.8503,
     capacity: 4500,
     depth: 14,
-    notes: 'West-suburban retail / employment node — corridor west via I-88/I-355 Park & Ride.',
+    notes: 'West-suburban retail / employment node — east to Oak Park/Downtown, west via I-88/I-355 Park & Ride.',
   },
   i88i355: {
     name: 'I-88 / I-355 Park & Ride',
@@ -108,7 +118,9 @@ const STATIONS = {
 const ROUTES = [
   { id: 'downtown-ohare', from: 'downtown', to: 'ohare', capacity: 10000, maxDepth: 48 },
   { id: 'downtown-midway', from: 'downtown', to: 'midway', capacity: 7000, maxDepth: 42 },
-  { id: 'downtown-oakbrook', from: 'downtown', to: 'oakbrook', capacity: 6000, maxDepth: 40 },
+  // Split Downtown–Oakbrook at Oak Park (I-290 / Harlem corridor)
+  { id: 'downtown-oakpark', from: 'downtown', to: 'oakpark', capacity: 6000, maxDepth: 40 },
+  { id: 'oakpark-oakbrook', from: 'oakpark', to: 'oakbrook', capacity: 5500, maxDepth: 38 },
   // Split former Oakbrook–Naperville long-haul at the 88/355 park-and-ride
   { id: 'oakbrook-i88i355', from: 'oakbrook', to: 'i88i355', capacity: 5500, maxDepth: 38 },
   { id: 'i88i355-naperville', from: 'i88i355', to: 'naperville', capacity: 5500, maxDepth: 38 },
