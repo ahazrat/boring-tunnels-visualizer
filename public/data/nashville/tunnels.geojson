@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "name": "nashville-tunnels",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "music-city-main",
+        "name": "Music City Loop Main",
+        "status": "under_construction",
+        "depth_m": 15,
+        "capacity_pph": 10000,
+        "notes": "Primary downtown → BNA corridor (~25 mi system concept, schematic alignment)."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-86.7816, 36.1627],
+          [-86.7700, 36.1550],
+          [-86.7550, 36.1480],
+          [-86.7350, 36.1400],
+          [-86.7100, 36.1320],
+          [-86.6850, 36.1280],
+          [-86.6780, 36.1260]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "music-city-branch",
+        "name": "Downtown Branch",
+        "status": "planned",
+        "depth_m": 14,
+        "capacity_pph": 5000,
+        "notes": "Planned downtown distribution branch."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-86.7816, 36.1627],
+          [-86.7900, 36.1650],
+          [-86.8000, 36.1680]
+        ]
+      }
+    }
+  ]
+}

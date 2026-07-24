@@ -1,0 +1,42 @@
+{
+  "type": "FeatureCollection",
+  "name": "austin-stations",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-atx-downtown",
+        "name": "Downtown Austin",
+        "status": "planned",
+        "capacity_pph": 3000,
+        "depth_m": 16,
+        "notes": "Placeholder downtown terminus."
+      },
+      "geometry": { "type": "Point", "coordinates": [-97.7431, 30.2672] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-atx-south",
+        "name": "South Corridor",
+        "status": "planned",
+        "capacity_pph": 2000,
+        "depth_m": 15,
+        "notes": "Placeholder corridor station."
+      },
+      "geometry": { "type": "Point", "coordinates": [-97.7200, 30.2500] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-atx-end",
+        "name": "East Hub",
+        "status": "planned",
+        "capacity_pph": 2500,
+        "depth_m": 16,
+        "notes": "Placeholder end station."
+      },
+      "geometry": { "type": "Point", "coordinates": [-97.7000, 30.2350] }
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "id": "las-vegas",
+    "name": "Las Vegas",
+    "shortName": "Vegas Loop",
+    "status": "operational",
+    "description": "Flagship network. Operational LVCC + resort segments, approved expansion to ~68 miles and 104 stations. Target system capacity ~90,000 passengers/hour.",
+    "center": [-115.172, 36.125],
+    "zoom": 12.5,
+    "pitch": 55,
+    "bearing": -20,
+    "metrics": {
+      "operationalMiles": 2.2,
+      "plannedMiles": 68,
+      "operationalStations": 6,
+      "plannedStations": 104,
+      "targetPph": 90000,
+      "currentPeakPph": 4400
+    },
+    "dataFiles": {
+      "tunnels": "data/las-vegas/tunnels.geojson",
+      "stations": "data/las-vegas/stations.geojson"
+    }
+  },
+  {
+    "id": "nashville",
+    "name": "Nashville",
+    "shortName": "Music City Loop",
+    "status": "under_construction",
+    "description": "Under construction corridor (~25 miles) linking downtown Nashville to BNA airport and key destinations.",
+    "center": [-86.72, 36.14],
+    "zoom": 11.5,
+    "pitch": 50,
+    "bearing": 15,
+    "metrics": {
+      "operationalMiles": 0,
+      "plannedMiles": 25,
+      "operationalStations": 0,
+      "plannedStations": 12,
+      "targetPph": 15000,
+      "currentPeakPph": 0
+    },
+    "dataFiles": {
+      "tunnels": "data/nashville/tunnels.geojson",
+      "stations": "data/nashville/stations.geojson"
+    }
+  },
+  {
+    "id": "dubai",
+    "name": "Dubai",
+    "shortName": "Dubai Loop",
+    "status": "planned",
+    "description": "Pilot project ~6.4 km with 4 stations (under contract). Lightweight placeholder dataset for multi-city UX.",
+    "center": [55.27, 25.2],
+    "zoom": 12.2,
+    "pitch": 48,
+    "bearing": 0,
+    "metrics": {
+      "operationalMiles": 0,
+      "plannedMiles": 4,
+      "operationalStations": 0,
+      "plannedStations": 4,
+      "targetPph": 5000,
+      "currentPeakPph": 0
+    },
+    "dataFiles": {
+      "tunnels": "data/dubai/tunnels.geojson",
+      "stations": "data/dubai/stations.geojson"
+    }
+  },
+  {
+    "id": "austin",
+    "name": "Austin",
+    "shortName": "Cybertunnel",
+    "status": "planned",
+    "description": "Prospective Cybertunnel concept. Placeholder alignment for future expansion of the visualizer.",
+    "center": [-97.74, 30.27],
+    "zoom": 12,
+    "pitch": 45,
+    "bearing": -10,
+    "metrics": {
+      "operationalMiles": 0,
+      "plannedMiles": 8,
+      "operationalStations": 0,
+      "plannedStations": 6,
+      "targetPph": 8000,
+      "currentPeakPph": 0
+    },
+    "dataFiles": {
+      "tunnels": "data/austin/tunnels.geojson",
+      "stations": "data/austin/stations.geojson"
+    }
+  }
+]

@@ -1,0 +1,114 @@
+{
+  "type": "FeatureCollection",
+  "name": "las-vegas-stations",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-lvcc-central",
+        "name": "LVCC Central",
+        "status": "operational",
+        "capacity_pph": 3000,
+        "depth_m": 12,
+        "notes": "Primary convention campus hub."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1515, 36.1325] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-lvcc-south",
+        "name": "LVCC South Hall",
+        "status": "operational",
+        "capacity_pph": 2000,
+        "depth_m": 12,
+        "notes": "South halls / campus connector."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1568, 36.1298] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-resorts-world",
+        "name": "Resorts World",
+        "status": "operational",
+        "capacity_pph": 2200,
+        "depth_m": 14,
+        "notes": "Operational resort terminus."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1662, 36.1380] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-westgate",
+        "name": "Westgate",
+        "status": "operational",
+        "capacity_pph": 1800,
+        "depth_m": 12,
+        "notes": "Operational connector station."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1472, 36.1358] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-encore",
+        "name": "Encore",
+        "status": "under_construction",
+        "capacity_pph": 2500,
+        "depth_m": 15,
+        "notes": "Strip corridor expansion station."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1655, 36.1285] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-venetian",
+        "name": "Venetian / Palazzo",
+        "status": "planned",
+        "capacity_pph": 2800,
+        "depth_m": 16,
+        "notes": "Planned Strip resort stop."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1690, 36.1215] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-allegiant",
+        "name": "Allegiant Stadium",
+        "status": "planned",
+        "capacity_pph": 6000,
+        "depth_m": 18,
+        "notes": "High-capacity event station."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1830, 36.0905] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-downtown",
+        "name": "Downtown Fremont",
+        "status": "planned",
+        "capacity_pph": 4000,
+        "depth_m": 16,
+        "notes": "Downtown terminus concept."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1420, 36.1695] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-airport",
+        "name": "Harry Reid Airport (LAS)",
+        "status": "planned",
+        "capacity_pph": 8000,
+        "depth_m": 20,
+        "notes": "Airport connector terminus."
+      },
+      "geometry": { "type": "Point", "coordinates": [-115.1535, 36.0845] }
+    }
+  ]
+}

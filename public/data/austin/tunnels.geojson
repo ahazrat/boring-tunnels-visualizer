@@ -1,0 +1,26 @@
+{
+  "type": "FeatureCollection",
+  "name": "austin-tunnels",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cybertunnel-main",
+        "name": "Cybertunnel Concept",
+        "status": "planned",
+        "depth_m": 16,
+        "capacity_pph": 8000,
+        "notes": "Prospective Cybertunnel schematic (placeholder)."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-97.7431, 30.2672],
+          [-97.7350, 30.2600],
+          [-97.7200, 30.2500],
+          [-97.7000, 30.2350]
+        ]
+      }
+    }
+  ]
+}

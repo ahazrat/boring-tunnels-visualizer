@@ -1,0 +1,156 @@
+{
+  "type": "FeatureCollection",
+  "name": "las-vegas-tunnels",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "lvcc-loop-main",
+        "name": "LVCC Convention Loop",
+        "status": "operational",
+        "depth_m": 12,
+        "capacity_pph": 4400,
+        "notes": "Primary operational convention-center loop connecting campus halls and nearby resorts."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.1568, 36.1298],
+          [-115.1542, 36.1312],
+          [-115.1515, 36.1325],
+          [-115.1498, 36.1342],
+          [-115.1512, 36.1365],
+          [-115.1545, 36.1372],
+          [-115.1578, 36.1360],
+          [-115.1595, 36.1338],
+          [-115.1582, 36.1312],
+          [-115.1568, 36.1298]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "lvcc-resorts-world",
+        "name": "LVCC → Resorts World",
+        "status": "operational",
+        "depth_m": 14,
+        "capacity_pph": 2200,
+        "notes": "Operational spur linking convention campus to Resorts World."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.1578, 36.1360],
+          [-115.1605, 36.1368],
+          [-115.1638, 36.1375],
+          [-115.1662, 36.1380]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "lvcc-westgate",
+        "name": "LVCC → Westgate",
+        "status": "operational",
+        "depth_m": 12,
+        "capacity_pph": 1800,
+        "notes": "Short operational connector to Westgate."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.1498, 36.1342],
+          [-115.1485, 36.1350],
+          [-115.1472, 36.1358]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "strip-corridor-north",
+        "name": "Strip Corridor (North)",
+        "status": "under_construction",
+        "depth_m": 16,
+        "capacity_pph": 8000,
+        "notes": "North Strip expansion connecting resorts toward downtown."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.1662, 36.1380],
+          [-115.1675, 36.1425],
+          [-115.1688, 36.1480],
+          [-115.1695, 36.1550],
+          [-115.1680, 36.1620],
+          [-115.1550, 36.1685],
+          [-115.1420, 36.1695]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "strip-corridor-south",
+        "name": "Strip Corridor (South)",
+        "status": "planned",
+        "depth_m": 18,
+        "capacity_pph": 12000,
+        "notes": "South Strip planned spine toward Allegiant Stadium and airport."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.1568, 36.1298],
+          [-115.1620, 36.1220],
+          [-115.1685, 36.1140],
+          [-115.1740, 36.1050],
+          [-115.1785, 36.0960],
+          [-115.1830, 36.0905]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "airport-connector",
+        "name": "Airport Connector",
+        "status": "planned",
+        "depth_m": 20,
+        "capacity_pph": 10000,
+        "notes": "Planned connector from south network toward Harry Reid International Airport."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.1830, 36.0905],
+          [-115.1750, 36.0880],
+          [-115.1650, 36.0860],
+          [-115.1535, 36.0845]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "east-network",
+        "name": "East Valley Expansion",
+        "status": "planned",
+        "depth_m": 15,
+        "capacity_pph": 6000,
+        "notes": "Prospective east-side future network (schematic)."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.1420, 36.1695],
+          [-115.1300, 36.1600],
+          [-115.1180, 36.1450],
+          [-115.1100, 36.1300]
+        ]
+      }
+    }
+  ]
+}

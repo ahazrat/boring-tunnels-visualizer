@@ -1,0 +1,54 @@
+{
+  "type": "FeatureCollection",
+  "name": "dubai-stations",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-dxb-1",
+        "name": "Pilot Station A",
+        "status": "planned",
+        "capacity_pph": 1500,
+        "depth_m": 18,
+        "notes": "Pilot network endpoint."
+      },
+      "geometry": { "type": "Point", "coordinates": [55.2740, 25.1970] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-dxb-2",
+        "name": "Pilot Station B",
+        "status": "planned",
+        "capacity_pph": 1200,
+        "depth_m": 18,
+        "notes": "Intermediate pilot stop."
+      },
+      "geometry": { "type": "Point", "coordinates": [55.2790, 25.2005] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-dxb-3",
+        "name": "Pilot Station C",
+        "status": "planned",
+        "capacity_pph": 1200,
+        "depth_m": 18,
+        "notes": "Intermediate pilot stop."
+      },
+      "geometry": { "type": "Point", "coordinates": [55.2850, 25.2040] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-dxb-4",
+        "name": "Pilot Station D",
+        "status": "planned",
+        "capacity_pph": 1500,
+        "depth_m": 18,
+        "notes": "Pilot network endpoint."
+      },
+      "geometry": { "type": "Point", "coordinates": [55.2920, 25.2080] }
+    }
+  ]
+}

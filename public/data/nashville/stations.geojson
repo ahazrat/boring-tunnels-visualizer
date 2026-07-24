@@ -1,0 +1,54 @@
+{
+  "type": "FeatureCollection",
+  "name": "nashville-stations",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-nash-downtown",
+        "name": "Downtown Nashville",
+        "status": "under_construction",
+        "capacity_pph": 4000,
+        "depth_m": 15,
+        "notes": "Primary downtown station."
+      },
+      "geometry": { "type": "Point", "coordinates": [-86.7816, 36.1627] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-nash-midtown",
+        "name": "Midtown",
+        "status": "under_construction",
+        "capacity_pph": 2500,
+        "depth_m": 14,
+        "notes": "Corridor intermediate stop."
+      },
+      "geometry": { "type": "Point", "coordinates": [-86.7350, 36.1400] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-nash-bna",
+        "name": "BNA Airport",
+        "status": "under_construction",
+        "capacity_pph": 6000,
+        "depth_m": 16,
+        "notes": "Airport terminus."
+      },
+      "geometry": { "type": "Point", "coordinates": [-86.6780, 36.1260] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "st-nash-gulch",
+        "name": "The Gulch",
+        "status": "planned",
+        "capacity_pph": 2000,
+        "depth_m": 14,
+        "notes": "Planned branch station."
+      },
+      "geometry": { "type": "Point", "coordinates": [-86.8000, 36.1680] }
+    }
+  ]
+}

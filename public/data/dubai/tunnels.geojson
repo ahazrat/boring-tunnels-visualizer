@@ -1,0 +1,26 @@
+{
+  "type": "FeatureCollection",
+  "name": "dubai-tunnels",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "dubai-pilot",
+        "name": "Dubai Loop Pilot",
+        "status": "planned",
+        "depth_m": 18,
+        "capacity_pph": 5000,
+        "notes": "Pilot ~6.4 km / 4 stations (schematic placeholder)."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [55.2740, 25.1970],
+          [55.2790, 25.2005],
+          [55.2850, 25.2040],
+          [55.2920, 25.2080]
+        ]
+      }
+    }
+  ]
+}
