@@ -7,13 +7,14 @@ import {
   type Map as MapLibreMapType,
 } from 'maplibre-gl'
 import { MapboxOverlay } from '@deck.gl/mapbox'
-import { PathLayer, ScatterplotLayer } from '@deck.gl/layers'
+import { PathLayer, ScatterplotLayer, TextLayer } from '@deck.gl/layers'
 import { TripsLayer } from '@deck.gl/geo-layers'
 import type { PickingInfo, Layer } from '@deck.gl/core'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 import { useAppStore } from '../store/useAppStore'
 import { statusRgba } from '../lib/colors'
+import { StationOverlay } from './StationOverlay'
 import {
   deviceParticleMultiplier,
   particleBudget,
@@ -122,6 +123,7 @@ export function MapView() {
   const whatIfFactor = useAppStore((s) => s.whatIfFactor)
   const cameraMode = useAppStore((s) => s.cameraMode)
   const timeOfDay = useAppStore((s) => s.timeOfDay)
+  const selectedStation = useAppStore((s) => s.selectedStation)
   const setSelectedStation = useAppStore((s) => s.setSelectedStation)
 
   const needsAnimation = layers.particles
@@ -170,6 +172,7 @@ export function MapView() {
       overlay = new MapboxOverlay({
         interleaved: false,
         layers: [],
+        getCursor: ({ isHovering }) => (isHovering ? 'pointer' : 'grab'),
       })
       map.addControl(overlay)
 
@@ -341,9 +344,8 @@ export function MapView() {
           widthMinPixels: 2,
           capRounded: true,
           jointRounded: true,
-          pickable: true,
-          autoHighlight: true,
-          highlightColor: [255, 255, 255, 80],
+          // Leave picking to stations so large markers stay easy to click
+          pickable: false,
           updateTriggers: {
             getPath: layers.depth3d,
             getColor: layers.depth3d,
@@ -368,23 +370,98 @@ export function MapView() {
       }
 
       if (layers.stations) {
+        const selectedId = selectedStation?.properties.id
+
+        // Soft halo (larger hit target + visual presence)
         deckLayers.push(
           new ScatterplotLayer<StationFeature>({
-            id: 'stations',
+            id: 'stations-halo',
             data: visibleStations,
             getPosition: (d) => d.geometry.coordinates as [number, number],
-            getFillColor: (d) => statusRgba(d.properties.status),
-            getLineColor: [255, 255, 255, 180],
-            getRadius: 70,
+            getFillColor: (d) => {
+              const [r, g, b] = statusRgba(d.properties.status)
+              const selected = d.properties.id === selectedId
+              return [r, g, b, selected ? 90 : 55]
+            },
+            getRadius: (d) => (d.properties.id === selectedId ? 420 : 320),
             radiusUnits: 'meters',
-            radiusMinPixels: 5,
-            radiusMaxPixels: 16,
-            stroked: true,
-            lineWidthMinPixels: 1.5,
+            radiusMinPixels: 18,
+            radiusMaxPixels: 48,
             pickable: true,
             autoHighlight: true,
+            highlightColor: [255, 255, 255, 60],
             onClick: (info: PickingInfo<StationFeature>) => {
               if (info.object) setSelectedStation(info.object)
+            },
+            updateTriggers: {
+              getFillColor: selectedId,
+              getRadius: selectedId,
+            },
+          }),
+        )
+
+        // Solid core marker
+        deckLayers.push(
+          new ScatterplotLayer<StationFeature>({
+            id: 'stations-core',
+            data: visibleStations,
+            getPosition: (d) => d.geometry.coordinates as [number, number],
+            getFillColor: (d) => {
+              const [r, g, b, a] = statusRgba(d.properties.status)
+              return d.properties.id === selectedId ? [r, g, b, 255] : [r, g, b, Math.max(a, 200)]
+            },
+            getLineColor: (d) =>
+              d.properties.id === selectedId
+                ? [255, 255, 255, 255]
+                : [255, 255, 255, 200],
+            getRadius: (d) => (d.properties.id === selectedId ? 180 : 130),
+            radiusUnits: 'meters',
+            radiusMinPixels: 12,
+            radiusMaxPixels: 32,
+            stroked: true,
+            lineWidthMinPixels: 2.5,
+            lineWidthMaxPixels: 4,
+            pickable: true,
+            autoHighlight: true,
+            highlightColor: [255, 255, 255, 100],
+            onClick: (info: PickingInfo<StationFeature>) => {
+              if (info.object) setSelectedStation(info.object)
+            },
+            updateTriggers: {
+              getFillColor: selectedId,
+              getLineColor: selectedId,
+              getRadius: selectedId,
+            },
+          }),
+        )
+
+        // Name labels
+        deckLayers.push(
+          new TextLayer<StationFeature>({
+            id: 'stations-labels',
+            data: visibleStations,
+            getPosition: (d) => d.geometry.coordinates as [number, number],
+            getText: (d) => d.properties.name.replace(/\s*\([^)]*\)\s*/g, '').trim(),
+            getSize: (d) => (d.properties.id === selectedId ? 15 : 13),
+            sizeUnits: 'pixels',
+            getColor: (d) => {
+              if (d.properties.id === selectedId) return [255, 255, 255, 255]
+              return [230, 236, 245, 230]
+            },
+            getPixelOffset: [0, -22],
+            fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif',
+            fontWeight: 600,
+            outlineWidth: 8,
+            outlineColor: [5, 5, 10, 220],
+            getTextAnchor: 'middle',
+            getAlignmentBaseline: 'bottom',
+            pickable: true,
+            onClick: (info: PickingInfo<StationFeature>) => {
+              if (info.object) setSelectedStation(info.object)
+            },
+            updateTriggers: {
+              getSize: selectedId,
+              getColor: selectedId,
             },
           }),
         )
@@ -419,13 +496,27 @@ export function MapView() {
     trips,
     timeOfDay,
     setSelectedStation,
+    selectedStation,
     mapReady,
     needsAnimation,
   ])
 
+  // Ease camera toward selected station for context
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady || !selectedStation) return
+    const [lng, lat] = selectedStation.geometry.coordinates
+    map.easeTo({
+      center: [lng, lat],
+      duration: 700,
+      // keep zoom if already close; gently ensure station is visible
+      zoom: Math.max(map.getZoom(), cityId === 'chicago' ? 10.2 : 12.5),
+    })
+  }, [selectedStation?.properties.id, mapReady, cityId])
+
   return (
     <div className="relative h-full min-h-0 w-full">
-      <div ref={containerRef} className="absolute inset-0 h-full w-full" />
+      <div ref={containerRef} className="absolute inset-0 h-full w-full cursor-grab" />
 
       {mapError && (
         <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/70 p-6">
@@ -443,8 +534,13 @@ export function MapView() {
           </p>
           <p className="font-semibold text-white">{city.shortName}</p>
           <p className="text-xs text-zinc-400">{city.name}</p>
+          {layers.stations && (
+            <p className="mt-1 text-[10px] text-zinc-500">Click a station for details</p>
+          )}
         </div>
       )}
+
+      <StationOverlay />
     </div>
   )
 }
