@@ -19,6 +19,20 @@ Beautiful, high-performance **static** 3D web app for exploring Boring Company t
 - Dark cyber aesthetic (Tesla / Boring Co vibe)
 - Free basemap via [OpenFreeMap](https://openfreemap.org/) (no API key)
 
+## City URL paths
+
+Each city has a deep-link path (shareable). On GitHub Pages:
+
+| City | Path |
+|------|------|
+| Las Vegas | https://ahazrat.github.io/boring-tunnels-visualizer/las-vegas |
+| Nashville | https://ahazrat.github.io/boring-tunnels-visualizer/nashville |
+| Dubai | https://ahazrat.github.io/boring-tunnels-visualizer/dubai |
+| Austin | https://ahazrat.github.io/boring-tunnels-visualizer/austin |
+| Chicago | https://ahazrat.github.io/boring-tunnels-visualizer/chicago |
+
+Locally (Vite): `http://localhost:5173/chicago`, etc. Selecting a city updates the URL; browser back/forward works.
+
 ## Quick start
 
 ```bash

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useAppStore } from '../store/useAppStore'
 import { STATUS_COLORS, statusLabel } from '../lib/colors'
 import { estimateVisibleThroughput } from '../lib/throughput'
+import { absoluteUrlForCity, pathForCity } from '../lib/cityRoutes'
 import type { LayerVisibility, TunnelStatus } from '../types'
 
 const STATUS_LAYER_KEYS: {
@@ -176,7 +177,12 @@ export function SidePanel() {
           })}
         </div>
         {city && (
-          <p className="text-[11px] leading-relaxed text-zinc-400">{city.description}</p>
+          <>
+            <p className="text-[11px] leading-relaxed text-zinc-400">{city.description}</p>
+            <p className="truncate font-mono text-[10px] text-cyan-500/80" title={absoluteUrlForCity(city.id)}>
+              {pathForCity(city.id)}
+            </p>
+          </>
         )}
       </section>
 

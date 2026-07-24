@@ -3,14 +3,29 @@ import { MapView } from './components/MapView'
 import { SidePanel } from './components/SidePanel'
 import { LoadingOverlay } from './components/LoadingOverlay'
 import { useAppStore } from './store/useAppStore'
+import { cityIdFromLocation } from './lib/cityRoutes'
 
 export default function App() {
   const init = useAppStore((s) => s.init)
+  const setCity = useAppStore((s) => s.setCity)
+  const cities = useAppStore((s) => s.cities)
+  const cityId = useAppStore((s) => s.cityId)
   const [panelOpen, setPanelOpen] = useState(true)
 
   useEffect(() => {
     void init()
   }, [init])
+
+  // Back/forward browser navigation between city paths
+  useEffect(() => {
+    const onPop = () => {
+      const id = cityIdFromLocation()
+      if (!id || !cities.some((c) => c.id === id) || id === cityId) return
+      void setCity(id, { syncUrl: false })
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [cities, cityId, setCity])
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-[#050508] text-zinc-100">

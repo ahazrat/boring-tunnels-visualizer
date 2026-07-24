@@ -9,6 +9,14 @@ import type {
 } from '../types'
 import { publicUrl } from '../lib/assets'
 import { estimateVisibleThroughput } from '../lib/throughput'
+import { cityIdFromLocation, syncCityUrl } from '../lib/cityRoutes'
+
+interface SetCityOptions {
+  /** Update browser URL (default true) */
+  syncUrl?: boolean
+  /** history.replaceState vs pushState when syncing URL */
+  replace?: boolean
+}
 
 interface AppState {
   cities: CityConfig[]
@@ -25,7 +33,7 @@ interface AppState {
   flyToken: number
 
   init: () => Promise<void>
-  setCity: (id: string) => Promise<void>
+  setCity: (id: string, opts?: SetCityOptions) => Promise<void>
   setLayer: (key: keyof LayerVisibility, value: boolean) => void
   setCameraMode: (mode: CameraMode) => void
   setWhatIfFactor: (v: number) => void
@@ -67,8 +75,13 @@ export const useAppStore = create<AppState>((set, get) => ({
       if (!res.ok) throw new Error(`Failed to load cities (${res.status})`)
       const cities = (await res.json()) as CityConfig[]
       set({ cities, loading: false })
-      const first = cities[0]
-      if (first) await get().setCity(first.id)
+
+      const fromUrl = cityIdFromLocation()
+      const match = cities.find((c) => c.id === fromUrl)
+      const target = match?.id ?? cities[0]?.id
+      if (target) {
+        await get().setCity(target, { replace: true, syncUrl: true })
+      }
     } catch (e) {
       set({
         loading: false,
@@ -77,9 +90,17 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
-  setCity: async (id) => {
+  setCity: async (id, opts) => {
     const city = get().cities.find((c) => c.id === id)
     if (!city) return
+
+    // Already on this city with data loaded — still sync URL if needed
+    if (get().cityId === id && get().tunnels) {
+      if (opts?.syncUrl !== false) {
+        syncCityUrl(id, opts?.replace ? 'replace' : 'push')
+      }
+      return
+    }
 
     set({
       loading: true,
@@ -90,6 +111,10 @@ export const useAppStore = create<AppState>((set, get) => ({
       stations: null,
     })
 
+    if (opts?.syncUrl !== false) {
+      syncCityUrl(id, opts?.replace ? 'replace' : 'push')
+    }
+
     try {
       const [tRes, sRes] = await Promise.all([
         fetch(publicUrl(city.dataFiles.tunnels)),
@@ -97,7 +122,6 @@ export const useAppStore = create<AppState>((set, get) => ({
       ])
       if (!tRes.ok || !sRes.ok) throw new Error('Failed to load city dataset')
       const [tunnels, stations] = await Promise.all([tRes.json(), sRes.json()])
-      // Prospective-only cities need Planned status on; keep heavy graphics off
       const hasOperational = Boolean(
         tunnels?.features?.some(
           (f: { properties?: { status?: string } }) =>
@@ -116,12 +140,15 @@ export const useAppStore = create<AppState>((set, get) => ({
               ...layers,
               planned: true,
               under_construction: true,
-              // never auto-enable costly graphics
               tunnelGlow: false,
               particles: false,
               depth3d: false,
             },
       })
+
+      if (typeof document !== 'undefined') {
+        document.title = `${city.shortName} · Boring Tunnels Visualizer`
+      }
     } catch (e) {
       set({
         loading: false,
