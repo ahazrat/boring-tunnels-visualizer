@@ -118,9 +118,9 @@
     "bearing": -8,
     "metrics": {
       "operationalMiles": 0,
-      "plannedMiles": 278,
+      "plannedMiles": 347,
       "operationalStations": 0,
-      "plannedStations": 15,
+      "plannedStations": 16,
       "targetPph": 50000,
       "currentPeakPph": 0
     },

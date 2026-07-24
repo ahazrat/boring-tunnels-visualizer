@@ -46,7 +46,7 @@
         "status": "planned",
         "capacity_pph": 7000,
         "depth_m": 15,
-        "notes": "Southwest-side airport terminus — south corridor toward Orland Park and Joliet."
+        "notes": "Southwest-side airport terminus — south corridor toward Orland Park/Joliet; also links to Burr Ridge hub."
       },
       "geometry": {
         "type": "Point",
@@ -64,7 +64,7 @@
         "status": "planned",
         "capacity_pph": 5000,
         "depth_m": 14,
-        "notes": "Near-west hub in Oak Park along the I-290 corridor — twin-tube links to Downtown, Oakbrook, O'Hare, and Midway."
+        "notes": "Near-west hub in Oak Park along the I-290 corridor — twin-tube links to Downtown, Oakbrook, O'Hare, Midway, and Burr Ridge."
       },
       "geometry": {
         "type": "Point",
@@ -82,7 +82,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and Woodridge."
+        "notes": "West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and Woodridge, south to Burr Ridge."
       },
       "geometry": {
         "type": "Point",
@@ -118,7 +118,7 @@
         "status": "planned",
         "capacity_pph": 6000,
         "depth_m": 14,
-        "notes": "Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, Lombard, and Bolingbrook."
+        "notes": "Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, Lombard, Bolingbrook, and Burr Ridge."
       },
       "geometry": {
         "type": "Point",
@@ -154,7 +154,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield and north to Woodridge."
+        "notes": "Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield, north to Woodridge, and east to Burr Ridge."
       },
       "geometry": {
         "type": "Point",
@@ -226,7 +226,7 @@
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub in Orland Park, splitting the Midway–Joliet twin-tube corridor."
+        "notes": "Southwest suburban hub in Orland Park — corridor toward Midway/Joliet; also links to Burr Ridge hub."
       },
       "geometry": {
         "type": "Point",
@@ -239,12 +239,30 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "st-chi-burrridge",
+        "name": "Burr Ridge",
+        "status": "planned",
+        "capacity_pph": 5500,
+        "depth_m": 14,
+        "notes": "I-55 corridor hub serving Darien, Willowbrook, and Burr Ridge — twin-tube links to Bolingbrook, Woodridge, Oakbrook, Oak Park, Midway, Orland Park, and Joliet."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.942,
+          41.7545
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "id": "st-chi-joliet",
         "name": "Joliet",
         "status": "planned",
         "capacity_pph": 4500,
         "depth_m": 14,
-        "notes": "Southwest suburban hub — twin-tube links to Orland Park (toward Midway), East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor."
+        "notes": "Southwest suburban hub — twin-tube links to Orland Park, Burr Ridge, East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor."
       },
       "geometry": {
         "type": "Point",

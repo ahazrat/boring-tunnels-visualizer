@@ -36,7 +36,7 @@ const STATIONS = {
     lat: 41.7868,
     capacity: 7000,
     depth: 15,
-    notes: 'Southwest-side airport terminus — south corridor toward Orland Park and Joliet.',
+    notes: 'Southwest-side airport terminus — south corridor toward Orland Park/Joliet; also links to Burr Ridge hub.',
   },
   oakpark: {
     name: 'Oak Park',
@@ -46,7 +46,7 @@ const STATIONS = {
     capacity: 5000,
     depth: 14,
     notes:
-      'Near-west hub in Oak Park along the I-290 corridor — twin-tube links to Downtown, Oakbrook, O\'Hare, and Midway.',
+      'Near-west hub in Oak Park along the I-290 corridor — twin-tube links to Downtown, Oakbrook, O\'Hare, Midway, and Burr Ridge.',
   },
   oakbrook: {
     name: 'Oakbrook Center',
@@ -55,7 +55,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and Woodridge.',
+      'West-suburban retail / employment node — east to Oak Park/Downtown, west/northwest to Lombard and Woodridge, south to Burr Ridge.',
   },
   lombard: {
     name: 'Lombard',
@@ -75,7 +75,7 @@ const STATIONS = {
     capacity: 6000,
     depth: 14,
     notes:
-      'Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, Lombard, and Bolingbrook.',
+      'Woodridge hub at the I-88 / I-355 interchange — park-and-ride access; links to Oakbrook, Naperville, Lombard, Bolingbrook, and Burr Ridge.',
   },
   naperville: {
     name: 'Naperville',
@@ -94,7 +94,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield and north to Woodridge.',
+      'Southwest suburban hub in Bolingbrook, splitting the Naperville–Joliet twin-tube corridor; also links west to Plainfield, north to Woodridge, and east to Burr Ridge.',
   },
   plainfield: {
     name: 'Plainfield',
@@ -132,7 +132,17 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub in Orland Park, splitting the Midway–Joliet twin-tube corridor.',
+      'Southwest suburban hub in Orland Park — corridor toward Midway/Joliet; also links to Burr Ridge hub.',
+  },
+  burrridge: {
+    name: 'Burr Ridge',
+    // Optimal between Darien, Willowbrook, and Burr Ridge — I-55 / County Line corridor
+    lon: -87.942,
+    lat: 41.7545,
+    capacity: 5500,
+    depth: 14,
+    notes:
+      'I-55 corridor hub serving Darien, Willowbrook, and Burr Ridge — twin-tube links to Bolingbrook, Woodridge, Oakbrook, Oak Park, Midway, Orland Park, and Joliet.',
   },
   joliet: {
     name: 'Joliet',
@@ -141,7 +151,7 @@ const STATIONS = {
     capacity: 4500,
     depth: 14,
     notes:
-      'Southwest suburban hub — twin-tube links to Orland Park (toward Midway), East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor.',
+      'Southwest suburban hub — twin-tube links to Orland Park, Burr Ridge, East Chicago, Bolingbrook (toward Naperville), and Plainfield; no Downtown corridor.',
   },
   evanston: {
     name: 'Evanston',
@@ -181,6 +191,14 @@ const ROUTES = [
   { id: 'midway-orlandpark', from: 'midway', to: 'orlandpark', capacity: 5000, maxDepth: 40 },
   { id: 'orlandpark-joliet', from: 'orlandpark', to: 'joliet', capacity: 4500, maxDepth: 42 },
   { id: 'joliet-eastchicago', from: 'joliet', to: 'eastchicago', capacity: 4500, maxDepth: 42 },
+  // Burr Ridge hub (Darien / Willowbrook / Burr Ridge — I-55 corridor)
+  { id: 'burrridge-bolingbrook', from: 'burrridge', to: 'bolingbrook', capacity: 4500, maxDepth: 38 },
+  { id: 'burrridge-woodridge', from: 'burrridge', to: 'woodridge', capacity: 4500, maxDepth: 36 },
+  { id: 'burrridge-oakbrook', from: 'burrridge', to: 'oakbrook', capacity: 5000, maxDepth: 36 },
+  { id: 'burrridge-oakpark', from: 'burrridge', to: 'oakpark', capacity: 5000, maxDepth: 38 },
+  { id: 'burrridge-midway', from: 'burrridge', to: 'midway', capacity: 5000, maxDepth: 38 },
+  { id: 'burrridge-orlandpark', from: 'burrridge', to: 'orlandpark', capacity: 4500, maxDepth: 38 },
+  { id: 'burrridge-joliet', from: 'burrridge', to: 'joliet', capacity: 4500, maxDepth: 40 },
   // Split Naperville–Joliet at Bolingbrook
   { id: 'naperville-bolingbrook', from: 'naperville', to: 'bolingbrook', capacity: 4000, maxDepth: 38 },
   { id: 'bolingbrook-joliet', from: 'bolingbrook', to: 'joliet', capacity: 4000, maxDepth: 40 },
